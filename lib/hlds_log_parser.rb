@@ -8,7 +8,7 @@ module HldsLogParser
 
     attr_accessor :s
 
-    # Creates a new client which will receive HLDS logs 
+    # Creates a new client which will receive HLDS logs (using UDP)
     #
     # ==== Attributes
     #
@@ -33,15 +33,12 @@ module HldsLogParser
   class Handler < EM::Connection
     # Get data from Client and parse using Regexp
     #
-    # * match the round winner
-    # * match the type of victory
-    # * match the CT score
-    # * match the T score
+    # * match the end of round, with score and victory type
     # * match who killed who with what
     #
     # ==== Attributes
     #
-    # * +data+ - Data received by Client from HLDS server
+    # * +data+ - Data received by Client from HLDS server (a line of log)
     def receive_data(data)
       if data.gsub(/(: Team ")/).count > 0
         # L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")
