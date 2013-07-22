@@ -43,20 +43,24 @@ module HldsLogParser
       if data.gsub(/(: Team ")/).count > 0
         # L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")
         winner, type, score_ct, score_t = data.match(/Team "([A-Z]+)" triggered "([A-Za-z_]+)" \(CT "(\d+)"\) \(T "(\d+)"\)/i).captures
-        HldsDisplayer.new("[CT] #{score_ct} - #{score_t} [TE] => Victoire des #{get_winner(winner)} par #{get_type(type)}")
+        HldsDisplayer.new("[CT] #{score_ct} - #{score_t} [TE] => Victoire des #{get_full_team_name(winner)} => #{get_type(type)}")
       elsif data.gsub(/(\>" killed ")/).count > 0
         # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"
         killer, killer_id, killer_team, killed, killed_id, killed_team, weapon = data.match(/: "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" killed "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" with "([A-Za-z0-9_]+)/i).captures
-        HldsDisplayer.new("[#{get_kill_team_name(killer_team)}] #{killer} killed [#{get_kill_team_name(killed_team)}] #{killed} with #{weapon}")
+        HldsDisplayer.new("[#{get_short_team_name(killer_team)}] #{killer} killed [#{get_short_team_name(killed_team)}] #{killed} with #{weapon}")
+      elsif data.gsub(/triggered "(.+)"$/).count > 0
+        # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
+        person, person_id, person_team, action = data.match(/: "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" triggered "(.+)"$/i).captures
+        HldsDisplayer.new("[#{get_short_team_name(person_team)}] #{person} => #{get_type(action)}") 
       end
     end
 
-    # Format the winner team name
+    # Format team name with long format (textual)
     #
     # ==== Attributes
     #
     # * +winner+ - Round winner (+CT+ or +T+) from logs
-    def get_winner(winner)
+    def get_full_team_name(winner)
       case winner
       when "T"
         return "Terroristes"
@@ -65,12 +69,12 @@ module HldsLogParser
       end
     end
 
-    # Format team name on frag 
+    # Format team name with short format (initials)
     #
     # ==== Attributes
     #
     # * +team+ - Round winner (+CT+ or +TERRORIST+) from logs
-    def get_kill_team_name(team)
+    def get_short_team_name(team)
       case team
       when "TERRORIST"
         return "TE"
@@ -87,13 +91,13 @@ module HldsLogParser
     def get_type(type)
       case type
       when "Bomb_Defused"
-        return "desamorcage de la bombe"
+        return "Bombe desamorcee"
       when "Target_Bombed"
-        return "destruction du site"
+        return "Site detruit !"
       when "Target_Saved"
-        return "protection du site"
+        return "Site defendu"
       else
-        return "elimination de l'equipe adverse"
+        return "Elimination de l'equipe adverse"
       end
     end
 
