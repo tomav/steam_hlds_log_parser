@@ -47,7 +47,7 @@ module HldsLogParser
       elsif data.gsub(/(\>" killed ")/).count > 0
         # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"
         killer, killer_id, killer_team, killed, killed_id, killed_team, weapon = data.match(/: "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" killed "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" with "([A-Za-z0-9_]+)/i).captures
-        HldsDisplayer.new("[#{killer_team}] #{killer} killed [#{killed_team}] #{killed} with #{weapon}")
+        HldsDisplayer.new("[#{get_kill_team_name(killer_team)}] #{killer} killed [#{get_kill_team_name(killed_team)}] #{killed} with #{weapon}")
       end
     end
 
@@ -62,6 +62,20 @@ module HldsLogParser
         return "Terroristes"
       else
         return "Anti-Terroristes"
+      end
+    end
+
+    # Format team name on frag 
+    #
+    # ==== Attributes
+    #
+    # * +team+ - Round winner (+CT+ or +TERRORIST+) from logs
+    def get_kill_team_name(team)
+      case team
+      when "TERRORIST"
+        return "TE"
+      else
+        return "CT"
       end
     end
 
