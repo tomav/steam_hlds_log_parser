@@ -7,4 +7,4 @@ class HldsDisplayer
   end
 end
 
-s = HldsLogParser::Client.new("127.0.0.1", 4567)
+HldsLogParser::Client.new("127.0.0.1", 4567)

@@ -26,8 +26,10 @@ en:
   vip_escaped: "The VIP has escaped"
   vip_not_escaped: "VIP has not escaped"
   # user actions
-  planted_the_bomb: "planted the bom"
-  spawned_with_the_bomb: "spawned with the bomb"
   begin_bomb_defuse_with_kit: "begin bomb defuse with kit"
+  begin_bomb_defuse_without_kit: "begin bomb defuse without kit"
   defused_the_bomb: "defused the bomb"
   dropped_the_bomb: "dropped the bomb"
+  got_the_bomb: "got the bomb"
+  planted_the_bomb: "planted the bom"
+  spawned_with_the_bomb: "spawned with the bomb"

@@ -26,8 +26,10 @@ fr:
   vip_escaped: "Le VIP s'est échappé"
   vip_not_escaped: "Le VIP ne s'est pas échappé"
   # user actions
-  planted_the_bomb: "a posé la bombe"
-  spawned_with_the_bomb: "a la bombe"
   begin_bomb_defuse_with_kit: "commence à désamorcer la bombe avec un kit"
+  begin_bomb_defuse_without_kit: "commence à désamorcer la bombe sans kit"
   defused_the_bomb: "a désamorcé la bombe"
   dropped_the_bomb: "a perdu la bombe"
+  got_the_bomb: "a récupéré la bombe"
+  planted_the_bomb: "a posé la bombe"
+  spawned_with_the_bomb: "a la bombe"
