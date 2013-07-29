@@ -10,7 +10,7 @@ en:
   # content
   killed: "killed"
   with: "with"
-  map_ends: "Mep ends"
+  map_ends: "Map ends: %{winner} score => %{score}"
   # round conclusion types
   all_hostages_rescued: "All hostages have been rescued"
   bomb_defused: "Bomb has been defused"

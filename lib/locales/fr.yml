@@ -10,7 +10,7 @@ fr:
   # content
   killed: "a tué"
   with: "au"
-  map_ends: "Fin de partie : Victoires des %{winner} avec %{score} points"
+  map_ends: "Fin de partie : Score des %{winner} => %{score}"
   # round conclusion types
   all_hostages_rescued: "Tous les otages ont été sauvés"
   bomb_defused: "La bombe a été désamorçée"

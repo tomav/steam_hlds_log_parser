@@ -55,7 +55,7 @@ module HldsLogParser
       # L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players
       if data.gsub(/Team "(.+)" scored "(\d+)" with "(\d+)"/).count > 0
         winner, winner_score = data.match(/Team "(.+)" scored "(\d+)" with/).captures
-        HldsDisplayer.new("#{I18n.t('map_ends', :winner => winner, :score => winner_score)}")
+        HldsDisplayer.new("#{I18n.t('map_ends', :winner => get_short_team_name(winner), :score => winner_score)}")
 
       # L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")
       elsif data.gsub(/(: Team ")/).count > 0
