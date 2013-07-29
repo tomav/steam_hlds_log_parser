@@ -1,12 +1,15 @@
+require "rubygems"
 require "hlds_log_parser/version"
 require "eventmachine"
+require "i18n"
 require "rdoc"
+
+I18n.load_path = Dir.glob( File.dirname(__FILE__) + "/locales/*.yml" )
+I18n.default_locale = :en
 
 module HldsLogParser
 
   class Client
-
-    attr_accessor :s
 
     # Creates a new client which will receive HLDS logs (using UDP)
     #
@@ -14,10 +17,15 @@ module HldsLogParser
     #
     # * +host+ - Hostname / IP Address the server will be running
     # * +port+ - Port to listen to
-    def initialize(host, port)
+    # * +locale+ - Set the language of returned content
+    # * +enable_kills+ Enable kills / frags detail (default=false)
+    # * +enable_actions+ Enable actions / defuse / ... detail (default=false)
+    def initialize(host, port, locale=:en, enable_kills=false, enable_actions=false)
+      $enable_kills, $enable_actions = enable_kills, enable_actions
       EM.run {
-        @@s = EM::open_datagram_socket(host, port, Handler)
-        puts "=> Client is now listening on #{host}:#{port} waiting for HLDS logs"
+        EM::open_datagram_socket(host, port, Handler)
+        I18n.locale = locale
+        puts "## #{host}:#{port} => #{I18n.t('client_connect')}"
       }
      end
 
@@ -26,33 +34,45 @@ module HldsLogParser
     # Stops the running client
     def stop
       @@s.close_connection
-      puts "=> Client is now stopped."
+      puts "## => #{I18n.t('client_stop')}"
     end
   end
+
 
   class Handler < EM::Connection
     # Get data from Client and parse using Regexp
     #
+    # * match end of map, with winner team and score
     # * match the end of round, with score and victory type
-    # * match who killed who with what
+    # * match who killed who with what (frags)
+    # * match who did what (defuse, drop the bomb...)
     #
     # ==== Attributes
     #
     # * +data+ - Data received by Client from HLDS server (a line of log)
     def receive_data(data)
-      if data.gsub(/(: Team ")/).count > 0
-        # L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")
+
+      # L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players
+      if data.gsub(/Team "(.+)" scored "(\d+)" with "(\d+)"/).count > 0
+        winner, winner_score = data.match(/Team "(.+)" scored "(\d+)" with/).captures
+        HldsDisplayer.new("#{I18n.t('map_ends', :winner => winner, :score => winner_score)}")
+
+      # L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")
+      elsif data.gsub(/(: Team ")/).count > 0
         winner, type, score_ct, score_t = data.match(/Team "([A-Z]+)" triggered "([A-Za-z_]+)" \(CT "(\d+)"\) \(T "(\d+)"\)/i).captures
-        HldsDisplayer.new("[CT] #{score_ct} - #{score_t} [TE] => Victoire des #{get_full_team_name(winner)} => #{get_type(type)}")
-      elsif data.gsub(/(\>" killed ")/).count > 0
-        # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"
-        killer, killer_id, killer_team, killed, killed_id, killed_team, weapon = data.match(/: "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" killed "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" with "([A-Za-z0-9_]+)/i).captures
-        HldsDisplayer.new("[#{get_short_team_name(killer_team)}] #{killer} killed [#{get_short_team_name(killed_team)}] #{killed} with #{weapon}")
-      elsif data.gsub(/triggered "(.+)"$/).count > 0
-        # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
-        person, person_id, person_team, action = data.match(/: "(.+)<(\d+)><STEAM_ID_LAN><([A-Z]+)>" triggered "(.+)"$/i).captures
-        HldsDisplayer.new("[#{get_short_team_name(person_team)}] #{person} => #{get_type(action)}") 
+        HldsDisplayer.new("[CT] #{score_ct} - #{score_t} [TE] => #{I18n.t(type.downcase)}")
+
+      # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"
+      elsif $enable_kills && data.gsub(/(\>" killed ")/).count > 0
+        killer, killer_team, killed, killed_team, weapon = data.match(/"(.+)<\d+><STEAM_ID_LAN><(.+)>" killed "(.+)<\d+><STEAM_ID_LAN><(.+)>" with "(.+)"/i).captures
+        HldsDisplayer.new("[#{get_short_team_name(killer_team)}] #{killer} #{I18n.t('killed')} [#{get_short_team_name(killed_team)}] #{killed} #{I18n.t('with')} #{weapon}")
+
+      # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
+      elsif $enable_actions && data.gsub(/<STEAM_ID_LAN><.+>" triggered "(.+)"$/).count > 0
+        person, person_team, type = data.match(/: "(.+)<\d+><STEAM_ID_LAN><(.+)>" triggered "(.+)"/i).captures
+        HldsDisplayer.new("[#{get_short_team_name(person_team)}] #{person} => #{I18n.t(type.downcase)}}") 
       end
+
     end
 
     # Format team name with long format (textual)
@@ -63,9 +83,9 @@ module HldsLogParser
     def get_full_team_name(winner)
       case winner
       when "T"
-        return "Terroristes"
+        return "#{I18n.t('full_team_name_te')}"
       else
-        return "Anti-Terroristes"
+        return "#{I18n.t('full_team_name_ct')}"
       end
     end
 
@@ -77,27 +97,9 @@ module HldsLogParser
     def get_short_team_name(team)
       case team
       when "TERRORIST"
-        return "TE"
+        return "#{I18n.t('short_team_name_te')}"
       else
-        return "CT"
-      end
-    end
-
-    # Format the type of victory
-    #
-    # ==== Attributes
-    #
-    # * +type+ - Victory type from logs (+Target_Saved+, +Target_Bombed+...)
-    def get_type(type)
-      case type
-      when "Bomb_Defused"
-        return "Bombe desamorcee"
-      when "Target_Bombed"
-        return "Site detruit !"
-      when "Target_Saved"
-        return "Site defendu"
-      else
-        return "Elimination de l'equipe adverse"
+        return "#{I18n.t('short_team_name_ct')}"
       end
     end
 

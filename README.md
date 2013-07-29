@@ -3,7 +3,7 @@
 Creates a server with EventMachine which listens to HLDS logs, parse and returns readable content from your game server.
 The returned content can be sent to a website, IRC or flowdock for match live streaming.
 
-Note : content is sent in french at this time.  Need i18n contributors!
+Note : content is sent in english or french at this time. Need i18n contributors!
 
 ## Installation
 
@@ -39,11 +39,13 @@ Ask this `class` to write a file, send to IRC or flowdock... whatever...
     end
 
     # Create the HLDS Log Parser
-    s = HldsLogParser::Client.new("127.0.0.1", 4567)
+    # HldsLogParser::Client.new(ip, port, locale, enable_kills, enable_actions)
+    # Check documentation to get more details
+    HldsLogParser::Client.new("127.0.0.1", 4567)
+
 
 ## TODO
 
-* Internationalization
 * JSON responder to allow user to make their own formatter / store in database
 
 ## Contributing

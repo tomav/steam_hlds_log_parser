@@ -1,23 +1,33 @@
 fr:
   # client
-  client_connect: "Client connecté en attente des logs du serveur HLDS"
-  client_stop: "Arrêt du client."
+  client_connect: "HLDS Log Parser connecté, en attente des logs du serveur HLDS"
+  client_stop: "HLDS Log Parser stoppé."
   # team
   full_team_name_te: "Terroriste"
   full_team_name_ct: "Anti-Terroriste"
   short_team_name_te: "TE"
   short_team_name_ct: "CT"
-  # actions
-  all_hostages_rescued: "Tous les hôtages ont été sauvé"
-  bomb_defused: "Bombe désamorçée"
-  cts_preventescape:
+  # content
+  killed: "a tué"
+  with: "au"
+  map_ends: "Fin de partie : Victoires des %{winner} avec %{score} points"
+  # round conclusion types
+  all_hostages_rescued: "Tous les otages ont été sauvés"
+  bomb_defused: "La bombe a été désamorçée"
+  cts_preventescape: "Les CT ont empéché l'évasion des Terroristes"
   cts_win: "Victoire des Anti-Terroristes"
-  hostages_not_rescued:
-  target_bombed: "La bombe a explosé !"
-  target_saved: "Le site a été protégé"
-  terrorists_escaped:
-  terrorists_not_escaped:
+  hostages_not_rescued: "Les otages n'ont pas été sauvés"
+  target_bombed: "La cible a été détruite !"
+  target_saved: "La cible a été protégée"
+  terrorists_escaped: "Les Terroristes se sont échappés"
+  terrorists_not_escaped: "Les Terroristes ne se sont pas échappés"
   terrorists_win: "Victoire des Terroristes"
-  vip_assassinated:
-  vip_escaped:
-  vip_not_escaped:
+  vip_assassinated: "Le VIP a été assassiné"
+  vip_escaped: "Le VIP s'est échappé"
+  vip_not_escaped: "Le VIP ne s'est pas échappé"
+  # user actions
+  planted_the_bomb: "a posé la bombe"
+  spawned_with_the_bomb: "a la bombe"
+  begin_bomb_defuse_with_kit: "commence à désamorcer la bombe avec un kit"
+  defused_the_bomb: "a désamorcé la bombe"
+  dropped_the_bomb: "a perdu la bombe"
