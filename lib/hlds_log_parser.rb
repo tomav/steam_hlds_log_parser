@@ -17,29 +17,40 @@ module HldsLogParser
     #
     # * +host+ - Hostname / IP Address the server will be running
     # * +port+ - Port to listen to
+    # * +options+ Hash for others options
+    #
+    # ==== Options
+    #
     # * +locale+ - Set the language of returned content
     # * +enable_kills+ Enable kills / frags detail (default=false)
-    # * +enable_actions+ Enable actions / defuse / ... detail (default=false)
-    def initialize(host, port, locale=:en, enable_kills=false, enable_actions=false)
-      $enable_kills, $enable_actions = enable_kills, enable_actions
+    # * +enable_actions+ Enable players actions / defuse / ... detail (default=false)
+    # * +enable_changelevel+ Enable changelevel (map) display (default=false)
+    #
+    def initialize(host, port, options = {})
+      default_options = {
+        :enable_kills       => false,
+        :enable_actions     => false,
+        :enable_changelevel => true
+      }
+      @@options = default_options.merge(options)
+
       EM.run {
-        EM::open_datagram_socket(host, port, Handler)
-        I18n.locale = locale
+        # setting locale
+        I18n.locale = options[:locale] || I18n.default_locale
+        # catch CTRL+C
+        Signal.trap("INT")  { EM.stop }
+        Signal.trap("TERM") { EM.stop }
+        # Let's start
+        EM::open_datagram_socket(host, port, Handler, @@options)
         puts "## #{host}:#{port} => #{I18n.t('client_connect')}"
       }
      end
 
-    public 
-
-    # Stops the running client
-    def stop
-      @@s.close_connection
-      puts "## => #{I18n.t('client_stop')}"
-    end
   end
 
 
   class Handler < EM::Connection
+
     # Get data from Client and parse using Regexp
     #
     # * match end of map, with winner team and score
@@ -51,6 +62,7 @@ module HldsLogParser
     # ==== Attributes
     #
     # * +data+ - Data received by Client from HLDS server (a line of log)
+    #
     def receive_data(data)
 
       # L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players
@@ -64,17 +76,17 @@ module HldsLogParser
         HldsDisplayer.new("[CT] #{score_ct} - #{score_t} [TE] => #{I18n.t(type.downcase)}")
 
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"
-      elsif $enable_kills && data.gsub(/(\>" killed ")/).count > 0
+      elsif @options[:enable_kills] && data.gsub(/(\>" killed ")/).count > 0
         killer, killer_team, killed, killed_team, weapon = data.match(/"(.+)<\d+><STEAM_ID_LAN><(.+)>" killed "(.+)<\d+><STEAM_ID_LAN><(.+)>" with "(.+)"/i).captures
         HldsDisplayer.new("[#{get_short_team_name(killer_team)}] #{killer} #{I18n.t('killed')} [#{get_short_team_name(killed_team)}] #{killed} #{I18n.t('with')} #{weapon}")
 
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
-      elsif $enable_actions && data.gsub(/<STEAM_ID_LAN><.+>" triggered "(.+)"$/).count > 0
+      elsif @options[:enable_actions] && data.gsub(/<STEAM_ID_LAN><.+>" triggered "(.+)"$/).count > 0
         person, person_team, type = data.match(/: "(.+)<\d+><STEAM_ID_LAN><(.+)>" triggered "(.+)"/i).captures
         HldsDisplayer.new("[#{get_short_team_name(person_team)}] #{person} #{I18n.t(type.downcase)}") 
 
       # L 05/10/2000 - 12:34:56: Loading map "de_dust2"
-      elsif data.gsub(/: Loading map "(.+)"/).count > 0
+      elsif @options[:enable_changelevel] && data.gsub(/: Loading map "(.+)"/).count > 0
         map = data.match(/: Loading map "(.+)"/i).captures
         HldsDisplayer.new("#{I18n.t('loading_map', :map => map)}") 
 
@@ -87,6 +99,7 @@ module HldsLogParser
     # ==== Attributes
     #
     # * +winner+ - Round winner (+CT+ or +T+) from logs
+    #
     def get_full_team_name(winner)
       case winner
       when "T"
@@ -101,6 +114,7 @@ module HldsLogParser
     # ==== Attributes
     #
     # * +team+ - Round winner (+CT+ or +TERRORIST+) from logs
+    #
     def get_short_team_name(team)
       case team
       when "TERRORIST"

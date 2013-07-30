@@ -7,4 +7,12 @@ class HldsDisplayer
   end
 end
 
-HldsLogParser::Client.new("127.0.0.1", 4567)
+## These are default options
+options = {
+  :locale             => :en,
+  :enable_kills       => false,
+  :enable_actions     => false,
+  :enable_changelevel => false
+}
+
+HldsLogParser::Client.new("127.0.0.1", 4567, options)
