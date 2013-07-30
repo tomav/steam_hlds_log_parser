@@ -8,6 +8,7 @@ en:
   short_team_name_te: "TE"
   short_team_name_ct: "CT"
   # content
+  committed_suicide: "committed suicide"
   killed: "killed"
   loading_map: "Loading map %{map}"
   with: "with"

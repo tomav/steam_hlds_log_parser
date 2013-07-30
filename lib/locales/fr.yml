@@ -8,6 +8,7 @@ fr:
   short_team_name_te: "TE"
   short_team_name_ct: "CT"
   # content
+  committed_suicide: "s'est suicidé"
   killed: "a tué"
   loading_map: "Chargement de %{map}"
   with: "au"

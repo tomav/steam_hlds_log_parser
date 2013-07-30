@@ -64,6 +64,7 @@ module HldsLogParser
     # * match end of map, with winner team and score
     # * match the end of round, with score and victory type
     # * match who killed who with what (frags)
+    # * match suicides
     # * match who did what (defuse, drop the bomb...)
     # * match changelevel
     #
@@ -87,6 +88,11 @@ module HldsLogParser
       elsif @options[:enable_kills] && data.gsub(/(\>" killed ")/).count > 0
         killer, killer_team, killed, killed_team, weapon = data.match(/"(.+)<\d+><STEAM_ID_LAN><(.+)>" killed "(.+)<\d+><STEAM_ID_LAN><(.+)>" with "(.+)"/i).captures
         HldsDisplayer.new("[#{get_short_team_name(killer_team)}] #{killer} #{I18n.t('killed')} [#{get_short_team_name(killed_team)}] #{killed} #{I18n.t('with')} #{weapon}")
+
+      # L 05/10/2000 - 12:34:56: "Player<66><STEAM_ID_LAN><TERRORIST>" committed suicide with "worldspawn" (world)
+      elsif @options[:enable_kills] && data.gsub(/>" committed suicide/).count > 0
+        killed = data.match(/: "(.+)<\d+>/).captures 
+        HldsDisplayer.new("#{killed} #{I18n.t('committed_suicide')}")
 
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
       elsif @options[:enable_actions] && data.gsub(/<STEAM_ID_LAN><.+>" triggered "(.+)"$/).count > 0
