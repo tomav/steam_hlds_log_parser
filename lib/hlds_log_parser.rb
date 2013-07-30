@@ -46,6 +46,7 @@ module HldsLogParser
     # * match the end of round, with score and victory type
     # * match who killed who with what (frags)
     # * match who did what (defuse, drop the bomb...)
+    # * match changelevel
     #
     # ==== Attributes
     #
@@ -70,7 +71,13 @@ module HldsLogParser
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
       elsif $enable_actions && data.gsub(/<STEAM_ID_LAN><.+>" triggered "(.+)"$/).count > 0
         person, person_team, type = data.match(/: "(.+)<\d+><STEAM_ID_LAN><(.+)>" triggered "(.+)"/i).captures
-        HldsDisplayer.new("[#{get_short_team_name(person_team)}] #{person} => #{I18n.t(type.downcase)}}") 
+        HldsDisplayer.new("[#{get_short_team_name(person_team)}] #{person} #{I18n.t(type.downcase)}") 
+
+      # L 05/10/2000 - 12:34:56: Loading map "de_dust2"
+      elsif data.gsub(/: Loading map "(.+)"/).count > 0
+        map = data.match(/: Loading map "(.+)"/i).captures
+        HldsDisplayer.new("#{I18n.t(loading_map), :map => map}") 
+
       end
 
     end

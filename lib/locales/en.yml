@@ -9,6 +9,7 @@ en:
   short_team_name_ct: "CT"
   # content
   killed: "killed"
+  loading_map: "Loading map %{map}"
   with: "with"
   map_ends: "Map ends: %{winner} score => %{score}"
   # round conclusion types
@@ -31,5 +32,8 @@ en:
   defused_the_bomb: "defused the bomb"
   dropped_the_bomb: "dropped the bomb"
   got_the_bomb: "got the bomb"
+  killed_a_hostage: "kille a hostage"
   planted_the_bomb: "planted the bom"
+  rescued_a_hostage: "rescued a hostage"
   spawned_with_the_bomb: "spawned with the bomb"
+  touched_a_hostage: "touched a hostage"

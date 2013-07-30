@@ -9,6 +9,7 @@ fr:
   short_team_name_ct: "CT"
   # content
   killed: "a tué"
+  loading_map: "Chargement de %{map}"
   with: "au"
   map_ends: "Fin de partie : Score des %{winner} => %{score}"
   # round conclusion types
@@ -31,5 +32,8 @@ fr:
   defused_the_bomb: "a désamorcé la bombe"
   dropped_the_bomb: "a perdu la bombe"
   got_the_bomb: "a récupéré la bombe"
+  killed_a_hostage: "a tué un otage"
   planted_the_bomb: "a posé la bombe"
+  rescued_a_hostage: "a sauvé un otage"
   spawned_with_the_bomb: "a la bombe"
+  touched_a_hostage: "a récupéré un otage"
