@@ -15,4 +15,4 @@ options = {
   :enable_changelevel => false
 }
 
-HldsLogParser::Client.new("127.0.0.1", 4567, options)
+HldsLogParser::Client.new("127.0.0.1", 27035, options)

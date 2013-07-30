@@ -41,6 +41,7 @@ module HldsLogParser
         Signal.trap("INT")  { EM.stop }
         Signal.trap("TERM") { EM.stop }
         # Let's start
+        puts "EM log for options => #{@@options}"
         EM::open_datagram_socket(host, port, Handler, @@options)
         puts "## #{host}:#{port} => #{I18n.t('client_connect')}"
       }
@@ -50,6 +51,11 @@ module HldsLogParser
 
 
   class Handler < EM::Connection
+
+    # Initialize Handler from Client options
+    def initialize(options)
+      @options = options
+    end
 
     # Get data from Client and parse using Regexp
     #

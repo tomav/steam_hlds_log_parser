@@ -24,7 +24,7 @@ Or install it yourself as:
 1. Create a `class` called `HldsDisplayer` which will receive parsed data.  
 Ask this `class` to write a file, send to IRC or flowdock... whatever...
 2. Create a new client on desired IP / Port
-3. In your HLDS server: `logaddress 127.0.0.1 4567`  
+3. In your HLDS server: `logaddress 127.0.0.1 27035`  
 
 ## Example
 
@@ -38,10 +38,15 @@ Ask this `class` to write a file, send to IRC or flowdock... whatever...
       end
     end
 
-    # Create the HLDS Log Parser
-    # HldsLogParser::Client.new(ip, port, locale, enable_kills, enable_actions)
-    # Check documentation to get more details
-    HldsLogParser::Client.new("127.0.0.1", 4567)
+    ## These are default options
+    options = {
+      :locale             => :en,
+      :enable_kills       => false,
+      :enable_actions     => false,
+      :enable_changelevel => false
+    }
+
+    HldsLogParser::Client.new("127.0.0.1", 27035, options)
 
 
 ## TODO
