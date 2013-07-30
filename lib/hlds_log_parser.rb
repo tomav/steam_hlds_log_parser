@@ -76,7 +76,7 @@ module HldsLogParser
       # L 05/10/2000 - 12:34:56: Loading map "de_dust2"
       elsif data.gsub(/: Loading map "(.+)"/).count > 0
         map = data.match(/: Loading map "(.+)"/i).captures
-        HldsDisplayer.new("#{I18n.t(loading_map, :map => map)}") 
+        HldsDisplayer.new("#{I18n.t('loading_map', :map => map)}") 
 
       end
 
