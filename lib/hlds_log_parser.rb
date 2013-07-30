@@ -32,7 +32,7 @@ module HldsLogParser
         :enable_actions     => false,
         :enable_changelevel => true
       }
-      @@options = default_options.merge(options)
+      client_options = default_options.merge(options)
 
       EM.run {
         # setting locale
@@ -41,7 +41,7 @@ module HldsLogParser
         Signal.trap("INT")  { EM.stop }
         Signal.trap("TERM") { EM.stop }
         # Let's start
-        EM::open_datagram_socket(host, port, Handler, @@options)
+        EM::open_datagram_socket(host, port, Handler, host, port, client_options)
       }
      end
 
@@ -51,12 +51,12 @@ module HldsLogParser
   class Handler < EM::Connection
 
     # Initialize Handler from Client options
-    def initialize(options)
-      @options = options
+    def initialize(host, port, client_options)
+      @host, @port, @options = host, port, client_options
     end
 
     def post_init
-      puts "## #{host}:#{port} => #{I18n.t('client_connect')}"
+      puts "## #{@host}:#{@port} => #{I18n.t('client_connect')}"
     end
 
     # Get data from Client and parse using Regexp
