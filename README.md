@@ -22,7 +22,7 @@ Or install it yourself as:
 ## Usage
 
 1. Create your own displayer `class` which will receive parsed data.  
-Ask this `class` to write a file, send content to IRC or flowdock... whatever... and give it as `:displayer` option Hash
+Ask this `class` to write a file, send content to IRC or flowdock... whatever... and give it as `:displayer` Hash option
 2. Create a new client on desired IP / Port / Options
 3. In your HLDS server: `logaddress 127.0.0.1 27035`  
 
