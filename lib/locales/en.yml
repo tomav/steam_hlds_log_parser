@@ -1,6 +1,7 @@
 en:
   # client
-  client_connect: "HLDS Log Parser connected, waiting HLDS logs"
+  client_connect: "HLDS connected and sending data"
+  client_disconnect: "HLDS disconnected? No data is received."
   client_stop: "HLDS Log Parser stopped."
   # team
   full_team_name_te: "Terrorist"

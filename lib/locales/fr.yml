@@ -1,6 +1,7 @@
 fr:
   # client
-  client_connect: "HLDS Log Parser connecté, en attente des logs du serveur HLDS"
+  client_connect: "HLDS vient de se connecter et transmets des données."
+  client_disconnect: "HLDS s'est déconnecté ?"
   client_stop: "HLDS Log Parser stoppé."
   # team
   full_team_name_te: "Terroriste"

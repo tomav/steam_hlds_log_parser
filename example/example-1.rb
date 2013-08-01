@@ -1,18 +1,15 @@
 require "rubygems"
 require "hlds_log_parser"
 
-class HldsDisplayer
-  def initialize(data)
-    puts data
-  end
-end
-
 ## These are default options
 options = {
-  :locale             => :en,
-  :enable_kills       => false,
-  :enable_actions     => false,
-  :enable_changelevel => false
+  :locale              => :en,
+  :display_kills       => true,
+  :display_actions     => true,
+  :display_changelevel => true,
+  # Except this one, but you will probably use your own Displayer
+  :displayer           => HldsLogParser::HldsPutsDisplayer
 }
 
-HldsLogParser::Client.new("127.0.0.1", 27035, options)
+parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
+parser.connect
