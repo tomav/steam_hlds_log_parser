@@ -5,6 +5,10 @@ The returned content can be sent to a website, IRC or flowdock for match live st
 
 Note : content is sent in english or french at this time. Need i18n contributors!
 
+## Build Status
+
+[![Build Status](https://travis-ci.org/tomav/hlds_log_parser.png?branch=master)](https://travis-ci.org/tomav/hlds_log_parser)
+
 ## Installation
 
 Add this line to your application's Gemfile:
