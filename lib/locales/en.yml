@@ -38,5 +38,5 @@ en:
   victory: "[CT] %{score_ct} - %{score_t} [T]"
   kill: "[%{killer_team}] %{killer} killed [%{killed_team}] %{killed} with %{weapon}"
   suicide: "%{killed} commited suicide"
-  event: "[%{person_team}] %{person} %{event}"
+  event: "[%{person_team}] %{person} %{event_i18n}"
   loading_map: "Loading %{map}"
