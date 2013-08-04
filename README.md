@@ -3,11 +3,14 @@
 Creates a server with EventMachine which listens to HLDS logs, parse and returns readable content from your game server.
 The returned content can be sent to a website, IRC or flowdock for match live streaming.
 
+Mostly tested on Steam HLDS for Counter-Strike.
+
 Note : content is sent in english or french at this time. Need i18n contributors!
 
 ## Build Status
 
 [![Build Status](https://travis-ci.org/tomav/hlds_log_parser.png?branch=master)](https://travis-ci.org/tomav/hlds_log_parser)
+[![Gem Version](https://badge.fury.io/rb/hlds_log_parser.png)](http://badge.fury.io/rb/hlds_log_parser)
 
 ## Installation
 
@@ -42,18 +45,11 @@ Ask this `class` to write a file, send content to IRC or flowdock... whatever...
       :display_actions     => true,
       :display_changelevel => true,
       # Except this one, but you will probably use your own Displayer
-      # This on will puts content to console
-      :displayer           => HldsLogParser::HldsPutsDisplayer
+      # This on will puts translated content to console
+      :displayer           => HldsLogParser::HldsI18nDisplayer
     }
 
-    parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
-    parser.connect
-
-
-
-## TODO
-
-* JSON responder to allow user to make their own formatter / store in database
+    HldsLogParser::Client.new("127.0.0.1", 27035, options)
 
 ## Contributing
 

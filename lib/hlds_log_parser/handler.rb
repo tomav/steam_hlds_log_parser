@@ -33,32 +33,32 @@ module HldsLogParser
       # L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players
       if data.gsub(/Team "(.+)" scored "(\d+)" with "(\d+)"/).count > 0
         winner, winner_score = data.match(/Team "(.+)" scored "(\d+)" with/).captures
-        content = "#{I18n.t('map_ends', :winner => get_short_team_name(winner), :score => winner_score)}"
+        content = { :type => 'map_ends', :params => { 'winner' => get_short_team_name(winner), :score => winner_score } } 
 
       # L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")
       elsif data.gsub(/(: Team ")/).count > 0
         winner, type, score_ct, score_t = data.match(/Team "([A-Z]+)" triggered "([A-Za-z_]+)" \(CT "(\d+)"\) \(T "(\d+)"\)/i).captures
-        content = "[CT] #{score_ct} - #{score_t} [TE] => #{I18n.t(type.downcase)}"
+        content = { :type => 'victory', :params => { :score_ct => score_ct, :score_t => score_t } }
 
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"
       elsif @options[:display_kills] && data.gsub(/(\>" killed ")/).count > 0
         killer, killer_team, killed, killed_team, weapon = data.match(/"(.+)<\d+><STEAM_ID_LAN><(.+)>" killed "(.+)<\d+><STEAM_ID_LAN><(.+)>" with "(.+)"/i).captures
-        content = "[#{get_short_team_name(killer_team)}] #{killer} #{I18n.t('killed')} [#{get_short_team_name(killed_team)}] #{killed} #{I18n.t('with')} #{weapon}"
+        content = { :type => 'kill', :params => { :killer_team => get_short_team_name(killer_team), :killer => killer, :killed_team => get_short_team_name(killed_team), :killed => killed, :weapon => weapon } }
 
       # L 05/10/2000 - 12:34:56: "Player<66><STEAM_ID_LAN><TERRORIST>" committed suicide with "worldspawn" (world)
       elsif @options[:display_kills] && data.gsub(/>" committed suicide/).count > 0
         killed = data.match(/: "(.+)<\d+>/).captures.first
-        content = "#{killed} #{I18n.t('committed_suicide')}"
+        content = { :type => 'suicide', :params => { :killed => killed } }
 
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
       elsif @options[:display_actions] && data.gsub(/<STEAM_ID_LAN><.+>" triggered "(.+)"$/).count > 0
-        person, person_team, type = data.match(/: "(.+)<\d+><STEAM_ID_LAN><(.+)>" triggered "(.+)"/i).captures
-        content = "[#{get_short_team_name(person_team)}] #{person} #{I18n.t(type.downcase)}"
+        person, person_team, event = data.match(/: "(.+)<\d+><STEAM_ID_LAN><(.+)>" triggered "(.+)"/i).captures
+        content = { :type => 'event', :params => { :person_team => person_team, :person => person, :event_item => event, :event_i18n => I18n.t(event.downcase)} }
 
       # L 05/10/2000 - 12:34:56: Loading map "de_dust2"
       elsif @options[:display_changelevel] && data.gsub(/: Loading map "(.+)"/).count > 0
         map = data.match(/: Loading map "(.+)"/i).captures.first
-        content = "#{I18n.t('loading_map', :map => map)}"
+        content = { :type => 'loading_map', :params => { :map => map } }
 
       end
 

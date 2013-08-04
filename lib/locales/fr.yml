@@ -8,12 +8,6 @@ fr:
   full_team_name_ct: "Anti-Terroriste"
   short_team_name_te: "TE"
   short_team_name_ct: "CT"
-  # content
-  committed_suicide: "s'est suicidé"
-  killed: "a tué"
-  loading_map: "Chargement de %{map}"
-  with: "au"
-  map_ends: "Fin de partie : Score des %{winner} => %{score}"
   # round conclusion types
   all_hostages_rescued: "Tous les otages ont été sauvés"
   bomb_defused: "La bombe a été désamorçée"
@@ -39,3 +33,10 @@ fr:
   rescued_a_hostage: "a sauvé un otage"
   spawned_with_the_bomb: "a la bombe"
   touched_a_hostage: "a récupéré un otage"
+  # events
+  map_ends: "Fin de partie : Score des %{winner} => %{score}"
+  victory: "[CT] %{score_ct} - %{score_t} [TE]"
+  kill: "[%{killer_team}] %{killer} a tué [%{killed_team}] %{killed} au %{weapon}"
+  suicide: "%{killed} s'est tué"
+  event: "[%{person_team}] %{person} %{event}"
+  loading_map: "Chargement de %{map}"

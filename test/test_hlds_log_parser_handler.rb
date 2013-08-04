@@ -19,37 +19,32 @@ class HandlerTest < Test::Unit::TestCase
 
   def test_match_score
     data = '# L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players"'
-    assert_equal( "Map ends: CT score => 17", default_handler.receive_data(data) )
-  end
-
-  def test_match_score
-    data = '# L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players"'
-    assert_equal( "Map ends: CT score => 17", default_handler.receive_data(data) )
+    assert_equal( {:type=>"map_ends", :params=>{"winner"=>"CT", :score=>"17"}}, default_handler.receive_data(data) )
   end
 
   def test_match_victory
     data = '# L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")'
-    assert_equal( "[CT] 3 - 0 [TE] => Counter-Terrorists Win", default_handler.receive_data(data) )
+    assert_equal( {:type=>"victory", :params=>{:score_ct=>"3", :score_t=>"0"}}, default_handler.receive_data(data) )
   end
 
   def test_match_killed
     data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"'
-    assert_equal( "[TE] Killer | Player killed [CT] Killed | Player with ak47", default_handler.receive_data(data) )
+    assert_equal( {:type=>"kill", :params => {:killer_team=>"TE", :killer=>"Killer | Player",  :killed_team=>"CT", :killed=>"Killed | Player", :weapon=>"ak47"}}, default_handler.receive_data(data))
   end
 
   def test_match_suicide
     data = '# L 05/10/2000 - 12:34:56: "Player<66><STEAM_ID_LAN><TERRORIST>" committed suicide with "worldspawn" (world)'
-    assert_equal( "Player committed suicide", default_handler.receive_data(data) )
+    assert_equal( {:type=>"suicide", :params=>{:killed=>"Player"}}, default_handler.receive_data(data) )
   end
   
   def test_match_action
     data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"'
-    assert_equal( "[CT] Killer | Player defused the bomb", default_handler.receive_data(data) )
+    assert_equal( {:type=>"event", :params=> {:person_team=>"CT", :person=>"Killer | Player", :event_item=>"Defused_The_Bomb", :event_i18n=>"defused the bomb"}}, default_handler.receive_data(data) )
   end
     
   def test_match_changelevel
     data = '# L 05/10/2000 - 12:34:56: Loading map "de_dust2"'
-    assert_equal( "Loading map de_dust2", default_handler.receive_data(data) )
+    assert_equal( {:type=>"loading_map", :params=>{:map=>"de_dust2"}}, default_handler.receive_data(data) )
   end
     
 

@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = HldsLogParser::VERSION
   spec.authors       = ["Thomas VIAL"]
   spec.email         = ["github@ifusio.com"]
-  spec.description   = %q{HLDS Log Parser receives logs from your game server and parse them in real time to give you usable content for your website, irc channel / flowdock...}
-  spec.summary       = %q{HLDS Log Parser receives logs from your game server and parse them in real time to give you usable content for your website, irc channel / flowdock...}
+  spec.description   = %q{HLDS Log Parser receives logs from your game server and parse them in real time to give you usable content for your website, irc channel / flowdock.... Works well with Counter-Strike and others HL games.}
+  spec.summary       = %q{HLDS Log Parser receives logs from your game server and parse them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others HL games.}
   spec.homepage      = "https://github.com/tomav/hlds_log_parser"
   spec.license       = "MIT"
 

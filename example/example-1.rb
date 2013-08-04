@@ -8,7 +8,7 @@ options = {
   :display_actions     => true,
   :display_changelevel => true,
   # Except this one, but you will probably use your own Displayer
-  :displayer           => HldsLogParser::HldsPutsDisplayer
+  :displayer           => HldsLogParser::HldsI18nDisplayer
 }
 
 parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
