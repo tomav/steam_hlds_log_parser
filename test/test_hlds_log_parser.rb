@@ -1,7 +1,7 @@
-require "hlds_log_parser"
 require "test/unit"
 require "coveralls"
 Coveralls.wear!
+require "hlds_log_parser"
 
 class HldsLogParserTest < Test::Unit::TestCase
 
