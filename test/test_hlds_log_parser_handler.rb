@@ -19,7 +19,7 @@ class HandlerTest < Test::Unit::TestCase
 
   def test_match_score
     data = '# L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players"'
-    assert_equal( {:type=>"map_ends", :params=>{"winner"=>"CT", :score=>"17"}}, default_handler.receive_data(data) )
+    assert_equal( {:type=>"map_ends", :params=>{:winner=>"CT", :score=>"17"}}, default_handler.receive_data(data) )
   end
 
   def test_match_victory
