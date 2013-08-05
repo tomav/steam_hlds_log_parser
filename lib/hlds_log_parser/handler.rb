@@ -53,7 +53,7 @@ module HldsLogParser
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"
       elsif @options[:display_actions] && data.gsub(/<STEAM_ID_LAN><.+>" triggered "(.+)"$/).count > 0
         person, person_team, event = data.match(/: "(.+)<\d+><STEAM_ID_LAN><(.+)>" triggered "(.+)"/i).captures
-        content = { :type => 'event', :params => { :person_team => person_team, :person => person, :event_item => event, :event_i18n => I18n.t(event.downcase)} }
+        content = { :type => 'event', :params => { :person_team => get_short_team_name(person_team), :person => person, :event_item => event, :event_i18n => I18n.t(event.downcase)} }
 
       # L 05/10/2000 - 12:34:56: Loading map "de_dust2"
       elsif @options[:display_changelevel] && data.gsub(/: Loading map "(.+)"/).count > 0

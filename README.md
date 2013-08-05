@@ -11,7 +11,7 @@ Note : content is sent in english or french at this time. Need i18n contributors
 
 [![Build Status](https://travis-ci.org/tomav/hlds_log_parser.png?branch=master)](https://travis-ci.org/tomav/hlds_log_parser)
 [![Gem Version](https://badge.fury.io/rb/hlds_log_parser.png)](http://badge.fury.io/rb/hlds_log_parser)
-
+[![Coverage Status](https://coveralls.io/repos/tomav/hlds_log_parser/badge.png)](https://coveralls.io/r/tomav/hlds_log_parser)
 ## Installation
 
 Add this line to your application's Gemfile:
