@@ -1,6 +1,7 @@
 require "simplecov"
 require "coveralls"
 require "em-rspec"
+
 SimpleCov.start do
   add_filter "/example/"
   add_filter "/spec/"

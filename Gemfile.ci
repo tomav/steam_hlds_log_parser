@@ -6,5 +6,5 @@ gem "eventmachine", "~> 1.0.3"
 gem "i18n"
 gem "coveralls", require: false
 gem "rspec"
-gem "evented-spec"
+gem "em-rspec"
 gem "hlds_log_parser"
