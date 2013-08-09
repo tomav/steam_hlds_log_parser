@@ -2,17 +2,19 @@ module HldsLogParser
 
   class Handler < EM::Connection
 
+    attr_reader :host, :port, :options
+
     # Initialize Handler from Client options
     def initialize(host, port, options)
       @host, @port, @options = host, port, options
     end
 
     def post_init
-      puts "## #{@host}:#{@port} => #{I18n.t('client_connect')}" unless @options[:test]
+      puts "## #{@host}:#{@port} => #{I18n.t('client_connect')}"
     end
 
     def unbind
-      puts "## #{@host}:#{@port} => #{I18n.t('client_disconnect')}" unless @options[:test]
+      puts "## #{@host}:#{@port} => #{I18n.t('client_disconnect')}" 
     end
 
     # Get data from Client and parse using Regexp

@@ -12,6 +12,7 @@ Note : content is sent in english or french at this time. Need i18n contributors
 [![Build Status](https://travis-ci.org/tomav/hlds_log_parser.png?branch=master)](https://travis-ci.org/tomav/hlds_log_parser)
 [![Gem Version](https://badge.fury.io/rb/hlds_log_parser.png)](http://badge.fury.io/rb/hlds_log_parser)
 [![Coverage Status](https://coveralls.io/repos/tomav/hlds_log_parser/badge.png)](https://coveralls.io/r/tomav/hlds_log_parser)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -28,7 +29,7 @@ Or install it yourself as:
 
 ## Usage
 
-1. Create your own displayer `class` which will receive parsed data.  
+1. Create your own displayer callback `class` which will receive parsed data
 Ask this `class` to write a file, send content to IRC or flowdock... whatever... and give it as `:displayer` Hash option
 2. Create a new client on desired IP / Port / Options
 3. In your HLDS server: `logaddress 127.0.0.1 27035`  
@@ -38,18 +39,26 @@ Ask this `class` to write a file, send content to IRC or flowdock... whatever...
     require "rubygems"
     require "hlds_log_parser"
 
+    class Formatter
+      def initialize(data)
+        # will 'puts' the translated content
+        HldsLogParser::HldsDisplayer.new(data).display_translation
+      end
+    end
+
+
     ## These are default options
     options = {
       :locale              => :en,
       :display_kills       => true,
       :display_actions     => true,
       :display_changelevel => true,
-      # Except this one, but you will probably use your own Displayer
-      # This on will puts translated content to console
-      :displayer           => HldsLogParser::HldsI18nDisplayer
+      :displayer           => HldsLogParser::Formatter
     }
 
-    HldsLogParser::Client.new("127.0.0.1", 27035, options)
+    parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
+    parser.connect
+
 
 ## Contributing
 

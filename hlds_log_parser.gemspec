@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = HldsLogParser::VERSION
   spec.authors       = ["Thomas VIAL"]
   spec.email         = ["github@ifusio.com"]
-  spec.description   = %q{HLDS Log Parser receives logs from your game server and parse them in real time to give you usable content for your website, irc channel / flowdock.... Works well with Counter-Strike and others HL games.}
-  spec.summary       = %q{HLDS Log Parser receives logs from your game server and parse them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others HL games.}
+  spec.description   = %q{HLDS Log Parser receives logs from your game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half_life based games.}
+  spec.summary       = %q{HLDS Log Parser receives logs from your game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half_life based games.}
   spec.homepage      = "https://github.com/tomav/hlds_log_parser"
   spec.license       = "MIT"
 
@@ -22,4 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rake"
   spec.add_dependency "eventmachine", "~> 1.0.3"
   spec.add_dependency "i18n"
+  spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "evented-spec"
 end

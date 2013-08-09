@@ -1,46 +1,35 @@
 module HldsLogParser
 
-  # Display Hash returned by Handler
+  # Default Displayer
   #
   # ==== Attributes
   #
-  # * +data+ - Data processed by 'receive_data'
+  # * +data+ - Data processed by 'receive_data' (Hash)
   #
-  class HldsHashDisplayer
+  class HldsDisplayer
+
+    attr_reader :data
+
     def initialize(data)
-      puts data
-    end
-  end
-
-  # Return translated Hash returned by Handler
-  #
-  # ==== Attributes
-  #
-  # * +hash+ - Data to be processed !by 'receive_data'
-  #
-  class HldsI18nProcessor
-
-    attr_reader :content
-
-    def initialize(hash)
-      @content = I18n.t(hash[:type], hash[:params])
+      @data = data
     end
 
-  end
-
-  # Display translated Hash returned by Handler
-  #
-  # ==== Attributes
-  #
-  # * +hash+ - Data to be processed !by 'receive_data'
-  #
-  class HldsI18nDisplayer
-    def initialize(hash)
-      unless hash.nil?
-        obj = HldsI18nProcessor.new(hash)
-        puts "#{obj.content}"
-      end
+    def get_data
+      return @data 
     end
+
+    def display_data
+      puts get_data
+    end
+
+    def get_translation
+      return I18n.t(@data[:type], @data[:params]) unless @data[:type].nil?
+    end
+
+    def display_translation
+      puts get_translation
+    end
+
   end
 
 end

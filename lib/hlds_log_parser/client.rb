@@ -26,12 +26,10 @@ module HldsLogParser
         :locale              => :en,
         :display_kills       => true,
         :display_actions     => true,
-        :display_changelevel => true,
-        :test                => false
+        :display_changelevel => true
       }
       @host, @port  = host, port
       @options      = default_options.merge(options)
-
      end
 
      def connect
