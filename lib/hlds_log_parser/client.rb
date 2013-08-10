@@ -29,7 +29,6 @@ module HldsLogParser
       }
       @host, @port  = host, port
       @options      = default_options.merge(options)
-      @machine      = nil
      end
 
      def connect
