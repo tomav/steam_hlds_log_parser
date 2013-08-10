@@ -22,4 +22,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rake"
   spec.add_dependency "eventmachine", "~> 1.0.3"
   spec.add_dependency "i18n"
+
+  spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "rspec-core"
+  spec.add_development_dependency "rspec"
+
 end
