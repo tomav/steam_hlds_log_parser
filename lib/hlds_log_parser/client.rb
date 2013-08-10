@@ -19,7 +19,6 @@ module HldsLogParser
     # * +display_actions+ Enable players actions / defuse / ... detail (default=true)
     # * +display_changelevel+ Enable changelevel (map) display (default=true)
     # * +displayer+ Class that will be use to display content (default=HldsReturnDisplayer)
-    # * +test+ Does not print content, used for unit test (default=false)
     #
     def initialize(host, port, options = {})
       default_options = {
@@ -30,18 +29,24 @@ module HldsLogParser
       }
       @host, @port  = host, port
       @options      = default_options.merge(options)
+      @machine      = nil
      end
 
      def connect
+      # setting locale
+      I18n.locale = @options[:locale] || I18n.default_locale
       EM.run {
-        # setting locale
-        I18n.locale = @options[:locale] || I18n.default_locale
         # catch CTRL+C
         Signal.trap("INT")  { EM.stop }
         Signal.trap("TERM") { EM.stop }
         # Let's start
         EM::open_datagram_socket(@host, @port, Handler, @host, @port, @options)
       }       
+     end
+
+     def stop
+       puts "## #{@host}:#{@port} => #{I18n.t('client_stop')}"
+       EM::stop_event_loop
      end
 
   end
