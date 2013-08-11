@@ -25,11 +25,7 @@ end
 class RSpecDisplayer
 end
 
-# Get the lib from the current path (not gem path)
-require_relative "../lib/hlds_log_parser"
-require_relative "../lib/hlds_log_parser/client"
-require_relative "../lib/hlds_log_parser/handler"
-require_relative "../lib/hlds_log_parser/displayer"
+require "hlds_log_parser"
 
 # Returns custom options as a Hash
 def custom_options

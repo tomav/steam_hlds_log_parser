@@ -6,7 +6,7 @@ require "rdoc"
 require "hlds_log_parser/version"
 require "hlds_log_parser/client"
 require "hlds_log_parser/handler"
-require "hlds_log_parser/displayers"
+require "hlds_log_parser/displayer"
 
 module HldsLogParser
 
