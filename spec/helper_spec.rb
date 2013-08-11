@@ -1,12 +1,16 @@
 require "simplecov"
 require "coveralls"
+require "rspec"
 
+# Simplecov / Coverall configuration
 SimpleCov.formatter = Coveralls::SimpleCov::Formatter
 SimpleCov.start do
   add_filter "/example/"
   add_filter "/spec/"
 end
 
+# Get ouput content of the given block
+# Source: https://github.com/cldwalker/hirb/blob/master/test/test_helper.rb
 def capture_stdout(&block)
   original_stdout = $stdout
   $stdout = fake = StringIO.new
@@ -21,12 +25,13 @@ end
 class RSpecDisplayer
 end
 
-require "hlds_log_parser"
+# Get the lib from the current path (not gem path)
+require_relative "../lib/hlds_log_parser"
+require_relative "../lib/hlds_log_parser/client"
+require_relative "../lib/hlds_log_parser/handler"
+require_relative "../lib/hlds_log_parser/displayer"
 
-def default_options
-  default_client.options
-end
-
+# Returns custom options as a Hash
 def custom_options
   options = {
     :locale              => :fr,
@@ -36,17 +41,3 @@ def custom_options
     :displayer           => RSpecDisplayer
   }  
 end
-
-def default_client
-  return HldsLogParser::Client.new("0.0.0.0", 27035)
-end
-
-def default_handler
-  options = default_client.options
-  return HldsLogParser::Handler.new("", "0.0.0.0", 27035, default_options)
-end
-
-def custom_client
-  return HldsLogParser::Client.new("0.0.0.0", 27035, custom_options)
-end
-

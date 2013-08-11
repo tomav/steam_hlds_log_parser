@@ -1,26 +1,59 @@
 require "helper_spec"
 
-describe HldsLogParser::HldsDisplayer do
+module HldsLogParser
 
-  data  = {:type=>"victory", :params=>{:score_ct=>"3", :score_t=>"0"}}
-  dsp   = HldsLogParser::HldsDisplayer.new(data)
+  describe "HldsLogParser" do
 
-  it "returns the given Hash" do
-    expect(dsp.get_data).to eq(data)
+    before :all do
+      @data           = {:type=>"victory", :params=>{:score_ct=>"3", :score_t=>"0"}}
+      @displayer      = HldsDisplayer.new(@data)
+    end
+
+    describe "HldsDisplayer" do
+
+      context "when 'data' is missing" do
+        it "raises an exception" do
+          expect { HldsDisplayer.new }.to raise_error(ArgumentError)
+        end
+      end
+
+      context "when 'data' is given" do
+
+        it "creates a 'HldsDisplayer'" do
+          @displayer.should be_an_instance_of HldsDisplayer
+        end
+
+        describe "#get_data" do
+          it "returns 'data' given as argument" do
+            @displayer.get_data.should_not be_nil      
+            @displayer.get_data.should be(@data)      
+          end
+        end
+
+        describe "#display_data" do
+          it "displays 'data' given as argument" do
+            eval(capture_stdout { @displayer.display_data }).should eq(@data)
+          end
+        end
+
+        describe "#get_translation" do
+          it "returns translated 'data' given as argument" do
+            @displayer.get_translation.should_not be_nil      
+            @displayer.get_translation.class.should be(String)      
+            @displayer.get_translation.should eq("[CT] 3 - 0 [T]")      
+          end
+        end
+
+        describe "#display_translation" do
+          it "displays translated 'data' given as argument" do
+            capture_stdout { @displayer.display_translation }.should eq("[CT] 3 - 0 [T]\n")
+          end
+        end
+
+      end
+
+    end
+
   end
-
-  it "returns nothing, just displays that Hash" do
-    expect( eval(capture_stdout { dsp.display_data }) ).to eq(data)
-  end
-
-  it "returns a translated content from a Hash" do
-    expect(dsp.get_translation).to eq("[CT] 3 - 0 [T]")
-  end
-
-  it "returns nothing, just displays the translated content from the Hash" do
-    
-    expect( capture_stdout { dsp.display_translation } ).to eq("[CT] 3 - 0 [T]\n")
-  end
-
 
 end

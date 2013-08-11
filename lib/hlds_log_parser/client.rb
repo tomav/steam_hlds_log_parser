@@ -4,7 +4,7 @@ module HldsLogParser
 
     attr_reader :host, :port, :options
 
-    # Creates a new client which will receive HLDS logs (using UDP)
+    # Creates a new client 
     #
     # ==== Attributes
     #
@@ -31,7 +31,8 @@ module HldsLogParser
       @options      = default_options.merge(options)
      end
 
-     def connect
+     # Starts the client which will receive HLDS logs (using UDP)
+     def start
       # setting locale
       I18n.locale = @options[:locale] || I18n.default_locale
       EM.run {
@@ -43,6 +44,7 @@ module HldsLogParser
       }       
      end
 
+     # Stops the client
      def stop
        puts "## #{@host}:#{@port} => #{I18n.t('client_stop')}"
        EM::stop_event_loop

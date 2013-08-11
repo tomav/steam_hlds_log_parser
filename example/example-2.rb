@@ -21,4 +21,4 @@ options = {
   :displayer           => FlowdockPusher
 }
 
-HldsLogParser::Client.new("127.0.0.1", 27035, options).connect
+HldsLogParser::Client.new("127.0.0.1", 27035, options).start

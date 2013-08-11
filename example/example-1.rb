@@ -19,4 +19,4 @@ options = {
 }
 
 parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
-parser.connect
+parser.start
