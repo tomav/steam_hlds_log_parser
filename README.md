@@ -57,7 +57,7 @@ Ask this `class` to write a file, send content to IRC or flowdock... whatever...
     }
 
     parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
-    parser.connect
+    parser.start
 
 
 ## Contributing
