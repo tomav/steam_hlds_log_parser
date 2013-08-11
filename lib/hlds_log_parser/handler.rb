@@ -5,14 +5,21 @@ module HldsLogParser
     attr_reader :host, :port, :options
 
     # Initialize Handler from Client options
+    #
+    # @host [String] Hostname / IP Address the server will be running
+    # @port [Integer] Port to listen to
+    # @options [Hash] Other options
+    #
     def initialize(host, port, options)
       @host, @port, @options = host, port, options
     end
 
+    # Triggered when HLDS connects
     def post_init
       puts "## #{@host}:#{@port} => #{I18n.t('client_connect')}"
     end
 
+    # Triggered when HLDS disconnects
     def unbind
       puts "## #{@host}:#{@port} => #{I18n.t('client_disconnect')}" 
     end
@@ -26,9 +33,7 @@ module HldsLogParser
     # * match who did what (defuse, drop the bomb...)
     # * match changelevel
     #
-    # ==== Attributes
-    #
-    # * +data+ - Data received by Client from HLDS server (a line of log)
+    # @data [String] Data received by Client from HLDS server (a line of log)
     #
     def receive_data(data)
 
@@ -70,9 +75,7 @@ module HldsLogParser
 
     # Format team name with long format (textual)
     #
-    # ==== Attributes
-    #
-    # * +winner+ - Round winner (+CT+ or +T+) from logs
+    # @winner [String] Round winner (+CT+ or +T+) from logs
     #
     def get_full_team_name(winner)
       case winner
@@ -85,9 +88,7 @@ module HldsLogParser
 
     # Format team name with short format (initials)
     #
-    # ==== Attributes
-    #
-    # * +team+ - Round winner (+CT+ or +TERRORIST+) from logs
+    # @team [String] Round winner (+CT+ or +TERRORIST+) from logs
     #
     def get_short_team_name(team)
       case team

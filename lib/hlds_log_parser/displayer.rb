@@ -2,9 +2,7 @@ module HldsLogParser
 
   # Default Displayer
   #
-  # ==== Attributes
-  #
-  # * +data+ - Data processed by 'receive_data' (Hash)
+  #  @data [Hash] Data returned by 'receive_data'
   #
   class HldsDisplayer
 
@@ -14,18 +12,22 @@ module HldsLogParser
       @data = data
     end
 
+    # Return data
     def get_data
       return @data 
     end
 
+    # Display data
     def display_data
       puts get_data
     end
 
+    # Return data translation
     def get_translation
       return I18n.t(@data[:type], @data[:params]) unless @data[:type].nil?
     end
 
+    # Display data translation
     def display_translation
       puts get_translation
     end

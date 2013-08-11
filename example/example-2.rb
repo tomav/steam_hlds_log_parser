@@ -1,6 +1,6 @@
 require "rubygems"
 require "hlds_log_parser"
-require "flowdock"
+# require "flowdock"
 
 ## The displayer class that will be used to send content to Flowdock
 class FlowdockPusher

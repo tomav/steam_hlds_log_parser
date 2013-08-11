@@ -14,7 +14,3 @@ module HldsLogParser
   I18n.default_locale = :en
 
 end
-
-
-
-

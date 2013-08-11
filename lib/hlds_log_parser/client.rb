@@ -6,11 +6,9 @@ module HldsLogParser
 
     # Creates a new client 
     #
-    # ==== Attributes
-    #
-    # * +host+ - Hostname / IP Address the server will be running
-    # * +port+ - Port to listen to
-    # * +options+ Hash for others options
+    # @host [String] Hostname / IP Address the server will be running
+    # @port [Integer] Port to listen to
+    # @options [Hash] Other options
     #
     # ==== Options
     #
