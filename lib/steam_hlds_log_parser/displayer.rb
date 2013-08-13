@@ -2,7 +2,7 @@ module SteamHldsLogParser
 
   # Default Displayer
   #
-  #  @data [Hash] Data returned by 'receive_data'
+  # @param [Hash] data Data returned by 'receive_data'
   #
   class Displayer
 
@@ -12,17 +12,23 @@ module SteamHldsLogParser
       @data = data
     end
 
-    # Return data
+    # Return 'data'
+    # 
+    # @return [Hash] Data processed by Handler class
+    #
     def get_data
       return @data 
     end
 
-    # Display data
+    # Display 'data'
     def display_data
       puts get_data
     end
 
-    # Return data translation
+    # Return 'data' translation
+    # 
+    # @return [String] Translated data processed by Handler class
+    #
     def get_translation
       return I18n.t(@data[:type], @data[:params]) unless @data[:type].nil?
     end

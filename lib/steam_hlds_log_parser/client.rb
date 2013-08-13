@@ -1,22 +1,21 @@
 module SteamHldsLogParser
 
+  # Listens to HLDS logs received via UDP on configured port
   class Client
 
     attr_reader :host, :port, :options
 
     # Creates a new client 
     #
-    # @host [String] Hostname / IP Address the server will be running
-    # @port [Integer] Port to listen to
-    # @options [Hash] Other options
+    # @param [String] host Hostname / IP Address the server will be running
+    # @param [Integer] port Port to listen to
+    # @param [Hash] options Other options
     #
-    # ==== Options
-    #
-    # * +locale+ - Set the language of returned content
-    # * +display_kills+ Enable kills / frags detail (default=true)
-    # * +display_actions+ Enable players actions / defuse / ... detail (default=true)
-    # * +display_changelevel+ Enable changelevel (map) display (default=true)
-    # * +displayer+ Class that will be use to display content (default=HldsReturnDisplayer)
+    # @option options [Symbol] :locale (:en) Set the language of returned content
+    # @option options [Boolean] :display_kills (true) Enable kills / frags detail 
+    # @option options [Boolean] :display_actions (true) Enable players actions / defuse / ... detail
+    # @option options [Boolean] :display_changelevel (true) Enable changelevel (map) display
+    # @option options [Class] :displayer Class that will be use to display content
     #
     def initialize(host, port, options = {})
       default_options = {

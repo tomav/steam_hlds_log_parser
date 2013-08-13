@@ -1,14 +1,15 @@
 module SteamHldsLogParser
 
+  # Process data received by 'Client'
   class Handler < EM::Connection
 
     attr_reader :host, :port, :options
 
     # Initialize Handler from Client options
     #
-    # @host [String] Hostname / IP Address the server will be running
-    # @port [Integer] Port to listen to
-    # @options [Hash] Other options
+    # @param [String] host Hostname / IP Address the server will be running
+    # @param [Integer] port Port to listen to
+    # @param [Hash] options Other options
     #
     def initialize(host, port, options)
       @host, @port, @options = host, port, options
@@ -33,7 +34,7 @@ module SteamHldsLogParser
     # * match who did what (defuse, drop the bomb...)
     # * match changelevel
     #
-    # @data [String] Data received by Client from HLDS server (a line of log)
+    # @param [String] data Data received by Client from HLDS server (a line of log)
     #
     def receive_data(data)
 
@@ -75,7 +76,9 @@ module SteamHldsLogParser
 
     # Format team name with long format (textual)
     #
-    # @winner [String] Round winner (+CT+ or +T+) from logs
+    # @param [String] winner Round winner (+CT+ or +T+) from logs
+    #
+    # @return [String] Full team name from translation files
     #
     def get_full_team_name(winner)
       case winner
@@ -88,7 +91,9 @@ module SteamHldsLogParser
 
     # Format team name with short format (initials)
     #
-    # @team [String] Round winner (+CT+ or +TERRORIST+) from logs
+    # @param [String] team Round winner (+CT+ or +TERRORIST+) from logs
+    #
+    # @return [String] Short team name from translation files
     #
     def get_short_team_name(team)
       case team

@@ -1,3 +1,4 @@
 module SteamHldsLogParser
-  VERSION = "0.4.0"
+  # Gem Version
+  VERSION = "0.4.1"
 end
