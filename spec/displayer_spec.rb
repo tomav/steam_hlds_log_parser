@@ -1,26 +1,26 @@
 require "helper_spec"
 
-module HldsLogParser
+module SteamHldsLogParser
 
-  describe "HldsLogParser" do
+  describe "SteamHldsLogParser" do
 
     before :all do
       @data           = {:type=>"victory", :params=>{:score_ct=>"3", :score_t=>"0"}}
-      @displayer      = HldsDisplayer.new(@data)
+      @displayer      = Displayer.new(@data)
     end
 
-    describe "HldsDisplayer" do
+    describe "Displayer" do
 
       context "when 'data' is missing" do
         it "raises an exception" do
-          expect { HldsDisplayer.new }.to raise_error(ArgumentError)
+          expect { Displayer.new }.to raise_error(ArgumentError)
         end
       end
 
       context "when 'data' is given" do
 
-        it "creates a 'HldsDisplayer'" do
-          @displayer.should be_an_instance_of HldsDisplayer
+        it "creates a 'Displayer'" do
+          @displayer.should be_an_instance_of Displayer
         end
 
         describe "#get_data" do

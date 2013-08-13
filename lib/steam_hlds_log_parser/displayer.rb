@@ -1,10 +1,10 @@
-module HldsLogParser
+module SteamHldsLogParser
 
   # Default Displayer
   #
   #  @data [Hash] Data returned by 'receive_data'
   #
-  class HldsDisplayer
+  class Displayer
 
     attr_reader :data
 

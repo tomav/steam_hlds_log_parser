@@ -25,7 +25,7 @@ end
 class RSpecDisplayer
 end
 
-require "hlds_log_parser"
+require "steam_hlds_log_parser"
 
 # Returns custom options as a Hash
 def custom_options

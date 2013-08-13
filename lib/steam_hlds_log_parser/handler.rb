@@ -1,4 +1,4 @@
-module HldsLogParser
+module SteamHldsLogParser
 
   class Handler < EM::Connection
 

@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'hlds_log_parser/version'
+require 'steam_hlds_log_parser/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "hlds_log_parser"
-  spec.version       = HldsLogParser::VERSION
+  spec.name          = "steam_hlds_log_parser"
+  spec.version       = SteamHldsLogParser::VERSION
   spec.authors       = ["Thomas VIAL"]
   spec.email         = ["github@ifusio.com"]
-  spec.description   = %q{HLDS Log Parser receives logs from your game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half_life based games.}
-  spec.summary       = %q{HLDS Log Parser receives logs from your game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half_life based games.}
-  spec.homepage      = "https://github.com/tomav/hlds_log_parser"
+  spec.description   = %q{Steam HLDS Log Parser receives logs from your Steam game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half-life based games.}
+  spec.summary       = %q{Steam HLDS Log Parser receives logs from your Steam game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half-life based games.}
+  spec.homepage      = "https://github.com/tomav/steam_hlds_log_parser"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

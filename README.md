@@ -1,4 +1,4 @@
-# HldsLogParser
+# Steam Hlds Log Parser
 
 Creates a server with EventMachine which listens to HLDS logs, parse and returns readable content from your game server.
 The returned content can be sent to a website, IRC or flowdock for match live streaming.
@@ -9,15 +9,15 @@ Note : content is sent in english or french at this time. Need i18n contributors
 
 ## Build Status
 
-[![Build Status](https://travis-ci.org/tomav/hlds_log_parser.png?branch=master)](https://travis-ci.org/tomav/hlds_log_parser)
-[![Gem Version](https://badge.fury.io/rb/hlds_log_parser.png)](http://badge.fury.io/rb/hlds_log_parser)
-[![Coverage Status](https://coveralls.io/repos/tomav/hlds_log_parser/badge.png)](https://coveralls.io/r/tomav/hlds_log_parser)
+[![Build Status](https://travis-ci.org/tomav/steam_hlds_log_parser.png?branch=master)](https://travis-ci.org/tomav/steam_hlds_log_parser)
+[![Gem Version](https://badge.fury.io/rb/steam_hlds_log_parser.png)](http://badge.fury.io/rb/steam_hlds_log_parser)
+[![Coverage Status](https://coveralls.io/repos/tomav/steam_hlds_log_parser/badge.png)](https://coveralls.io/r/tomav/steam_hlds_log_parser)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'hlds_log_parser'
+    gem 'steam_hlds_log_parser'
 
 And then execute:
 
@@ -25,7 +25,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install hlds_log_parser
+    $ gem install steam_hlds_log_parser
 
 ## Usage
 
@@ -37,12 +37,12 @@ Ask this `class` to write a file, send content to IRC or flowdock... whatever...
 ## Example
 
     require "rubygems"
-    require "hlds_log_parser"
+    require "steam_hlds_log_parser"
 
     class Formatter
       def initialize(data)
         # will 'puts' the translated content
-        HldsLogParser::HldsDisplayer.new(data).display_translation
+        SteamHldsLogParser::Displayer.new(data).display_translation
       end
     end
 
@@ -56,7 +56,7 @@ Ask this `class` to write a file, send content to IRC or flowdock... whatever...
       :displayer           => Formatter
     }
 
-    parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
+    parser = SteamHldsLogParser::Client.new("127.0.0.1", 27035, options)
     parser.start
 
 

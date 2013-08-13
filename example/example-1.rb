@@ -1,10 +1,10 @@
 require "rubygems"
-require "hlds_log_parser"
+require "steam_hlds_log_parser"
 
 class Formatter
   def initialize(data)
     # will 'puts' the translated content
-    HldsLogParser::HldsDisplayer.new(data).display_translation
+    SteamHldsLogParser::Displayer.new(data).display_translation
   end
 end
 
@@ -18,5 +18,5 @@ options = {
   :displayer           => Formatter
 }
 
-parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
+parser = SteamHldsLogParser::Client.new("127.0.0.1", 27035, options)
 parser.start

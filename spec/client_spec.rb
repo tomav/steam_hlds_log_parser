@@ -1,8 +1,8 @@
 require "helper_spec"
 
-module HldsLogParser
+module SteamHldsLogParser
 
-  describe "HldsLogParser" do
+  describe "SteamHldsLogParser" do
 
     before :all do
       @client         = Client.new("0.0.0.0", 27035)
