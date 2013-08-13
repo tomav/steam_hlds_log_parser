@@ -1,6 +1,10 @@
 module SteamHldsLogParser
 
   # Listens to HLDS logs received via UDP on configured port
+  #
+  # @attr_reader [String] host Client host / IP
+  # @attr_reader [Integer] port Client port to listen to
+  # @attr_reader [Hash] options Client options
   class Client
 
     attr_reader :host, :port, :options
@@ -8,8 +12,8 @@ module SteamHldsLogParser
     # Creates a new client 
     #
     # @param [String] host Hostname / IP Address the server will be running
-    # @param [Integer] port Port to listen to
-    # @param [Hash] options Other options
+    # @param [Integer] port Port will be listening to
+    # @param [Hash] options Other configuration options
     #
     # @option options [Symbol] :locale (:en) Set the language of returned content
     # @option options [Boolean] :display_kills (true) Enable kills / frags detail 

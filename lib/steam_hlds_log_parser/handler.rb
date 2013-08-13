@@ -1,15 +1,19 @@
 module SteamHldsLogParser
 
   # Process data received by 'Client'
+  #
+  # @attr_reader [String] host Client host / IP
+  # @attr_reader [Integer] port Client port to listen to
+  # @attr_reader [Hash] options Client options
   class Handler < EM::Connection
 
     attr_reader :host, :port, :options
 
     # Initialize Handler from Client options
     #
-    # @param [String] host Hostname / IP Address the server will be running
-    # @param [Integer] port Port to listen to
-    # @param [Hash] options Other options
+    # @param [String] host Hostname / IP Address the server is running
+    # @param [Integer] port Port is listening to
+    # @param [Hash] options Other client configuration options
     #
     def initialize(host, port, options)
       @host, @port, @options = host, port, options

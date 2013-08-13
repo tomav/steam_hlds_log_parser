@@ -1,11 +1,10 @@
 # Steam Hlds Log Parser
 
-Creates a server with EventMachine which listens to HLDS logs, parse and returns readable content from your game server.
-The returned content can be sent to a website, IRC or flowdock for match live streaming.
+Steam Hlds Log Parser listens to UDP log packets sent by your (local or remote) HLDS game server, processes data and returns clean or/and translated and readable content that you can use for your website, irc channel, match live streaming, bots, database...
 
-Mostly tested on Steam HLDS for Counter-Strike.
+Should work with all Steam HLDS based games, and has been mostly tested on Counter-Strike 1.6.
 
-Note : content is sent in english or french at this time. Need i18n contributors!
+Note : translated content is sent in english or french at this time. Need i18n contributors!
 
 ## Build Status
 
@@ -27,12 +26,14 @@ Or install it yourself as:
 
     $ gem install steam_hlds_log_parser
 
-## Usage
+## Configuration
 
 1. Create your own displayer callback `class` which will receive parsed data
 Ask this `class` to write a file, send content to IRC or flowdock... whatever... and give it as `:displayer` Hash option
 2. Create a new client on desired IP / Port / Options
-3. In your HLDS server: `logaddress 127.0.0.1 27035`  
+3. Of course, you need to have server RCON. In your `server.cfg` (or in server console) add `logaddress 127.0.0.1 27035`. It specifies where the logs will be sent. This must be the IP / Port your ruby client will listen to.
+
+If you are behind a router/firewall, you probably need to configure it.
 
 ## Example
 
@@ -59,6 +60,16 @@ Ask this `class` to write a file, send content to IRC or flowdock... whatever...
     parser = SteamHldsLogParser::Client.new("127.0.0.1", 27035, options)
     parser.start
 
+## Documentation
+
+Steam HLDS Log Parser should be 100% documented.
+However, if you find something to improve, feel free to contribute.
+Full documentation can be found on [Steam HLDS Parser Log page on Rubydoc](http://rubydoc.info/gems/steam_hlds_log_parser).
+
+## Tests
+
+Steam HLDS Log Parser uses RSpec as test / specification framework and should be 100% tested too.
+Here again, feel free to improve it.
 
 ## Contributing
 
