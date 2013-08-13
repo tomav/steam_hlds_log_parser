@@ -53,7 +53,7 @@ Ask this `class` to write a file, send content to IRC or flowdock... whatever...
       :display_kills       => true,
       :display_actions     => true,
       :display_changelevel => true,
-      :displayer           => HldsLogParser::Formatter
+      :displayer           => Formatter
     }
 
     parser = HldsLogParser::Client.new("127.0.0.1", 27035, options)
