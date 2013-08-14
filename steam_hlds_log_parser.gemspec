@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SteamHldsLogParser::VERSION
   spec.authors       = ["Thomas VIAL"]
   spec.email         = ["github@ifusio.com"]
-  spec.description   = %q{Steam HLDS Log Parser receives logs from your Steam game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half-life based games.}
-  spec.summary       = %q{Steam HLDS Log Parser receives logs from your Steam game server and parses them in real time to give you usable content for your website, irc channel / flowdock... Works well with Counter-Strike and others Half-life based games.}
+  spec.description   = %q{Steam Hlds Log Parser listens to UDP log packets sent by your (local or remote) HLDS game server, processes data and returns clean or/and translated and readable content that you can use for your website, irc channel, match live streaming, bots, database... Should work with all Steam HLDS based games, and has been mostly tested on Counter-Strike 1.6.}
+  spec.summary       = %q{Steam Hlds Log Parser listens to UDP log packets sent by your (local or remote) HLDS game server, processes data and returns clean or/and translated and readable content that you can use for your website, irc channel, match live streaming, bots, database... Should work with all Steam HLDS based games, and has been mostly tested on Counter-Strike 1.6.}
   spec.homepage      = "https://github.com/tomav/steam_hlds_log_parser"
   spec.license       = "MIT"
 
