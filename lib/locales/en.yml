@@ -6,7 +6,7 @@ en:
   # team
   full_team_name_te: "Terrorist"
   full_team_name_ct: "Counter-Terrorist"
-  short_team_name_te: "TE"
+  short_team_name_te: "T"
   short_team_name_ct: "CT"
   # round conclusion types
   all_hostages_rescued: "All hostages have been rescued"
@@ -29,7 +29,7 @@ en:
   dropped_the_bomb: "dropped the bomb"
   got_the_bomb: "got the bomb"
   killed_a_hostage: "killed a hostage"
-  planted_the_bomb: "planted the bom"
+  planted_the_bomb: "planted the bomb"
   rescued_a_hostage: "rescued a hostage"
   spawned_with_the_bomb: "spawned with the bomb"
   touched_a_hostage: "touched a hostage"

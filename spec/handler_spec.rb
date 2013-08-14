@@ -71,16 +71,25 @@ module SteamHldsLogParser
             end
           end
 
-          context "when data is 'killed'" do
+          context "when data is 'killed' (STEAM_ID_LAN)" do
             it "returns Hash on killed" do
               data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"'
-              expected = {:type=>"kill", :params => {:killer_team=>"TE", :killer=>"Killer | Player",  :killed_team=>"CT", :killed=>"Killed | Player", :weapon=>"ak47"}}
+              expected = {:type=>"kill", :params => {:killer_team=>"T", :killer=>"Killer | Player",  :killed_team=>"CT", :killed=>"Killed | Player", :weapon=>"ak47"}}
               @handler.receive_data(data).class.should eq(Hash)
               @handler.receive_data(data).should eq(expected)
             end
           end
 
-          context "when data is 'suicide'" do
+          context "when data is 'killed' (STEAM_0:0:12345)" do
+            it "returns Hash on killed" do
+              data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_0:0:12345><TERRORIST>" killed "Killed | Player<60><STEAM_0:0:12345><CT>" with "ak47"'
+              expected = {:type=>"kill", :params => {:killer_team=>"T", :killer=>"Killer | Player",  :killed_team=>"CT", :killed=>"Killed | Player", :weapon=>"ak47"}}
+              @handler.receive_data(data).class.should eq(Hash)
+              @handler.receive_data(data).should eq(expected)
+            end
+          end
+
+          context "when data is 'suicide' (STEAM_ID_LAN)" do
             it "returns Hash on suicide" do
               data = '# L 05/10/2000 - 12:34:56: "Player<66><STEAM_ID_LAN><TERRORIST>" committed suicide with "worldspawn" (world)'
               expected = {:type=>"suicide", :params=>{:killed=>"Player"}}
@@ -89,9 +98,27 @@ module SteamHldsLogParser
             end
           end
 
-          context "when data is 'event'" do
+          context "when data is 'suicide' (STEAM_0:0:12345)" do
+            it "returns Hash on suicide" do
+              data = '# L 05/10/2000 - 12:34:56: "Player<66><STEAM_0:0:12345><TERRORIST>" committed suicide with "worldspawn" (world)'
+              expected = {:type=>"suicide", :params=>{:killed=>"Player"}}
+              @handler.receive_data(data).class.should eq(Hash)
+              @handler.receive_data(data).should eq(expected)
+            end
+          end
+
+          context "when data is 'event' (STEAM_ID_LAN)" do
             it "returns Hash on event" do
               data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"'
+              expected = {:type=>"event", :params=> {:person_team=>"CT", :person=>"Killer | Player", :event_item=>"Defused_The_Bomb", :event_i18n=>"defused the bomb"}}
+              @handler.receive_data(data).class.should eq(Hash)
+              @handler.receive_data(data).should eq(expected)
+            end
+          end
+
+          context "when data is 'event' (STEAM_0:0:12345)" do
+            it "returns Hash on event" do
+              data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_0:0:12345><CT>" triggered "Defused_The_Bomb"'
               expected = {:type=>"event", :params=> {:person_team=>"CT", :person=>"Killer | Player", :event_item=>"Defused_The_Bomb", :event_i18n=>"defused the bomb"}}
               @handler.receive_data(data).class.should eq(Hash)
               @handler.receive_data(data).should eq(expected)
@@ -123,7 +150,7 @@ module SteamHldsLogParser
 
           context "when full name is given"
           it "returns short name" do
-            @handler.get_short_team_name("TERRORIST").should eq("TE")
+            @handler.get_short_team_name("TERRORIST").should eq("T")
             @handler.get_short_team_name("CT").should eq("CT")
           end
 
