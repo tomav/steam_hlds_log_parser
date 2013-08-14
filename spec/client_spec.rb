@@ -45,7 +45,7 @@ module SteamHldsLogParser
         @custom_client.options[:locale].should be(:fr)
         @custom_client.options[:display_kills].should be(false)
         @custom_client.options[:display_actions].should be(false)
-        @custom_client.options[:display_changelevel].should be(false)
+        @custom_client.options[:display_changelevel].should be(true)
       end
 
       describe "#start and #stop" do

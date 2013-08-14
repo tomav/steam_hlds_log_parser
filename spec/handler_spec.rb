@@ -8,6 +8,7 @@ module SteamHldsLogParser
       @client         = Client.new("0.0.0.0", 27035)
       @options        = @client.options
       @handler        = Handler.new("", "0.0.0.0", 27035, @options)
+      @custom_handler = Handler.new("", "0.0.0.0", 27035, custom_options)
     end
 
     describe "Handler" do
@@ -134,26 +135,31 @@ module SteamHldsLogParser
             end
           end
 
+          context "when 'displayer' is set" do
+            it "returns Hash on changelevel provided by 'displayer'" do
+              data = '# L 05/10/2000 - 12:34:56: Loading map "de_dust2"'
+              expected = {:type=>"loading_map", :params=>{:map=>"de_dust2"}}
+              @custom_handler.options[:displayer].should eq(RSpecDisplayer)
+              @custom_handler.receive_data(data).data.should eq(expected)
+            end
+          end
+
         end
 
         describe "#get_full_team_name" do
-
           context "when short name is given"
           it "returns full name" do
             @handler.get_full_team_name("T").should eq("Terrorist")
             @handler.get_full_team_name("CT").should eq("Counter-Terrorist")
           end
-
         end
 
         describe "#get_short_team_name" do
-
           context "when full name is given"
           it "returns short name" do
             @handler.get_short_team_name("TERRORIST").should eq("T")
             @handler.get_short_team_name("CT").should eq("CT")
           end
-
         end
 
       end

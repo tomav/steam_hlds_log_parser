@@ -3,9 +3,12 @@ require "coveralls"
 require "rspec"
 
 # Simplecov / Coverall configuration
-SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
 SimpleCov.start do
-  add_filter "/example/"
+  add_filter "/examples/"
   add_filter "/spec/"
 end
 
@@ -23,6 +26,10 @@ def capture_stdout(&block)
 end
 
 class RSpecDisplayer
+  attr_reader :data
+  def initialize(data)
+    @data = data
+  end
 end
 
 require "steam_hlds_log_parser"
@@ -33,7 +40,7 @@ def custom_options
     :locale              => :fr,
     :display_kills       => false,
     :display_actions     => false,
-    :display_changelevel => false,
+    :display_changelevel => true,
     :displayer           => RSpecDisplayer
   }  
 end
