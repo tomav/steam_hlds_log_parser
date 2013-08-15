@@ -41,6 +41,8 @@ def custom_options
     :display_kills       => false,
     :display_actions     => false,
     :display_changelevel => true,
+    :display_chat        => false,
+    :display_team_chat   => false,
     :displayer           => RSpecDisplayer
   }  
 end

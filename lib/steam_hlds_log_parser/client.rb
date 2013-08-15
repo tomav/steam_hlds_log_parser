@@ -19,6 +19,8 @@ module SteamHldsLogParser
     # @option options [Boolean] :display_kills (true) Enable kills / frags detail 
     # @option options [Boolean] :display_actions (true) Enable players actions / defuse / ... detail
     # @option options [Boolean] :display_changelevel (true) Enable changelevel (map) display
+    # @option options [Boolean] :display_chat (true) Enable chat ('say') display
+    # @option options [Boolean] :display_team_chat (true) Enable chat ('say_team') display
     # @option options [Class] :displayer Class that will be use to display content
     #
     def initialize(host, port, options = {})
@@ -26,7 +28,9 @@ module SteamHldsLogParser
         :locale              => :en,
         :display_kills       => true,
         :display_actions     => true,
-        :display_changelevel => true
+        :display_changelevel => true,
+        :display_chat        => true,
+        :display_team_chat   => true,
       }
       @host, @port  = host, port
       @options      = default_options.merge(options)

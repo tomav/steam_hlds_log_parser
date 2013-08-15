@@ -72,6 +72,16 @@ module SteamHldsLogParser
         map = data.match(/: Loading map "(.+)"/i).captures.first
         content = { :type => 'loading_map', :params => { :map => map } }
 
+      # L 05/10/2000 - 12:34:56: "Player<15><STEAM_0:0:12345><TERRORIST>" say "gg" (dead)
+      elsif @options[:display_chat] && data.gsub(/: "(.+)<\d+><.+><([A-Z]+)>" say "(.+)"/).count > 0
+        player, player_team, message = data.match(/: "(.+)<\d+><.+><([A-Z]+)>" say "(.+)"/i).captures
+        content = { :type => 'chat', :params => { :player => player, :player_team => get_short_team_name(player_team), :chat => message } }
+
+      # L 05/10/2000 - 12:34:56: "Player<15><STEAM_0:0:12345><TERRORIST>" say_team "Rush B" (dead)
+      elsif @options[:display_team_chat] && data.gsub(/: "(.+)<\d+><.+><([A-Z]+)>" say_team "(.+)"/).count > 0
+        player, player_team, message = data.match(/: "(.+)<\d+><.+><([A-Z]+)>" say_team "(.+)"/i).captures
+        content = { :type => 'team_chat', :params => { :player => player, :player_team => get_short_team_name(player_team), :chat => message } }
+
       end
 
       # no matching pattern, no output

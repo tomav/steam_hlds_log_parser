@@ -135,6 +135,24 @@ module SteamHldsLogParser
             end
           end
 
+          context "when data is 'chat'" do
+            it "returns Hash on changelevel" do
+              data = '# L 05/10/2000 - 12:34:56: "Player<15><STEAM_0:0:12345><TERRORIST>" say "gg" (dead)'
+              expected = {:type=>"chat", :params=>{:player=>"Player", :player_team=>"T", :chat=>"gg"}}
+              @handler.receive_data(data).class.should eq(Hash)
+              @handler.receive_data(data).should eq(expected)
+            end
+          end
+          
+          context "when data is 'team_chat'" do
+            it "returns Hash on changelevel" do
+              data = '# L 05/10/2000 - 12:34:56: "Player<15><STEAM_0:0:12345><TERRORIST>" say_team "Rush B"'
+              expected = {:type=>"team_chat", :params=>{:player=>"Player", :player_team=>"T", :chat=>"Rush B"}}
+              @handler.receive_data(data).class.should eq(Hash)
+              @handler.receive_data(data).should eq(expected)
+            end
+          end
+
           context "when 'displayer' is set" do
             it "returns Hash on changelevel provided by 'displayer'" do
               data = '# L 05/10/2000 - 12:34:56: Loading map "de_dust2"'

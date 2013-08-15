@@ -40,3 +40,5 @@ en:
   suicide: "%{killed} commited suicide"
   event: "[%{person_team}] %{person} %{event_i18n}"
   loading_map: "Loading %{map}"
+  chat: "[%{player_team}] %{player} says \"%{chat}\""
+  team_chat: "[%{player_team}] %{player} says \"%{chat}\" to others [%{player_team}]"

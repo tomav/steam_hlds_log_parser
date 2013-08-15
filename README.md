@@ -42,7 +42,7 @@ If you are behind a router/firewall, you probably need to configure it.
 
     class Formatter
       def initialize(data)
-        # will 'puts' the translated content
+        # will 'puts' the translated content using built-in displayer
         SteamHldsLogParser::Displayer.new(data).display_translation
       end
     end
@@ -54,6 +54,8 @@ If you are behind a router/firewall, you probably need to configure it.
       :display_kills       => true,
       :display_actions     => true,
       :display_changelevel => true,
+      :display_chat        => true,
+      :display_team_chat   => true,
       :displayer           => Formatter
     }
 

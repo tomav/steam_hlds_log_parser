@@ -15,6 +15,8 @@ options = {
   :display_kills       => true,
   :display_actions     => true,
   :display_changelevel => true,
+  :display_chat        => true,
+  :display_team_chat   => true,
   :displayer           => Formatter
 }
 
