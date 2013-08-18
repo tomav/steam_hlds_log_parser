@@ -39,13 +39,13 @@ By default, Steam HLDS Log Parser runs on `0.0.0.0:27115` _(+100 than default HL
 1 - On your game server, send logs to your Ruby server (in this example, same machine).
 
 ```
-logaddres 0.0.0.0 27115
+logaddress 0.0.0.0 27115
 ``` 
 
 or  
 
 ```
-logaddres_add 0.0.0.0 27115
+logaddress_add 0.0.0.0 27115
 ```
 
 2 - Create a file named, for example, `hlds_parser.rb` with this content:
