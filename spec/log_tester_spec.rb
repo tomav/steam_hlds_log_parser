@@ -5,9 +5,8 @@ module SteamHldsLogParser
   describe "SteamHldsLogParser" do
 
     before :all do
-      @client         = Client.new("0.0.0.0", 27035)
-      @options        = @client.options
-      @handler        = Handler.new("", "0.0.0.0", 27035, @options)
+      @client         = Client.new(RSpecDisplayer)
+      @handler        = Handler.new("", @client.displayer, @client.options)
     end
 
     describe "LogTester" do

@@ -37,12 +37,14 @@ require "steam_hlds_log_parser"
 # Returns custom options as a Hash
 def custom_options
   options = {
-    :locale              => :fr,
-    :display_kills       => false,
-    :display_actions     => false,
-    :display_changelevel => true,
-    :display_chat        => false,
-    :display_team_chat   => false,
-    :displayer           => RSpecDisplayer
+    :host                 => "127.0.0.1",
+    :port                 => 12345,
+    :locale               => :fr,
+    :display_kills        => false,
+    :display_actions      => false,
+    :display_changelevel  => false,
+    :display_chat         => false,
+    :display_team_chat    => false,
+    :displayer            => RSpecDisplayer
   }  
 end

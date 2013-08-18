@@ -5,10 +5,9 @@ module SteamHldsLogParser
   describe "SteamHldsLogParser" do
 
     before :all do
-      @client         = Client.new("0.0.0.0", 27035)
-      @options        = @client.options
-      @handler        = Handler.new("", "0.0.0.0", 27035, @options)
-      @custom_handler = Handler.new("", "0.0.0.0", 27035, custom_options)
+      @client         = Client.new(RSpecDisplayer)
+      @handler        = Handler.new("", @client.displayer, @client.options)
+      @custom_handler = Handler.new("", RSpecDisplayer, { :host => "0.0.0.0", :port => 27115, :display_changelevel => true })
     end
 
     describe "Handler" do
@@ -24,24 +23,24 @@ module SteamHldsLogParser
   
         context "when 'host' and 'port' are given"
         it { should be_an_instance_of Handler }
-        it "has a 'host'" do
-          @handler.host.should_not be_nil      
-          @handler.host.should eq("0.0.0.0")
+        it "has a 'host' option" do
+          @handler.options[:host].should_not be_nil      
+          @handler.options[:host].should eq("0.0.0.0")
         end
-        it "has a 'port'" do
-          @handler.port.should_not be_nil      
-          @handler.port.should eq(27035)
+        it "has a 'port' option" do
+          @handler.options[:port].should_not be_nil      
+          @handler.options[:port].should eq(27115)
         end
 
         describe "#post_init" do
           it "displays a console message when hlds connects" do
-            capture_stdout { @handler.post_init }.should eq("## 0.0.0.0:27035 => HLDS connected and sending data\n")
+            capture_stdout { @handler.post_init }.should eq("## 0.0.0.0:27115 => HLDS connected and sending data\n")
           end
         end
 
         describe "#unbind" do
           it "displays a console message when hlds disconnects" do
-            capture_stdout { @handler.unbind }.should eq("## 0.0.0.0:27035 => HLDS disconnected? No data is received.\n")
+            capture_stdout { @handler.unbind }.should eq("## 0.0.0.0:27115 => HLDS disconnected? No data is received.\n")
           end
         end
 
@@ -153,11 +152,13 @@ module SteamHldsLogParser
             end
           end
 
+          subject { @custom_handler }
           context "when 'displayer' is set" do
             it "returns Hash on changelevel provided by 'displayer'" do
               data = '# L 05/10/2000 - 12:34:56: Loading map "de_dust2"'
               expected = {:type=>"loading_map", :params=>{:map=>"de_dust2"}}
-              @custom_handler.options[:displayer].should eq(RSpecDisplayer)
+              @custom_handler.displayer.should eq(RSpecDisplayer)
+              @custom_handler.options[:display_changelevel].should be(true)
               @custom_handler.receive_data(data).data.should eq(expected)
             end
           end

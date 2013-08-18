@@ -1,26 +1,25 @@
 require "rubygems"
 require "steam_hlds_log_parser"
-# require "flowdock"
 
-## The displayer class that will be used to send content to Flowdock
-class FlowdockPusher
+# Your displayer Class is what you will do with your data
+class Formatter
   def initialize(data)
-    # Get translated data 
-    content = SteamHldsLogParser::Displayer.new(data).get_translation
-    # Source: https://github.com/flowdock/flowdock-api
-    flow = Flowdock::Flow.new(:api_token => "12345678901234567890123456789012", :external_user_name => "HLDS-Live")
-    flow.push_to_chat(:content => content)
+    # will 'puts' the translated content, using built-in Displayer
+    SteamHldsLogParser::Displayer.new(data).display_translation
   end
 end
 
+# These are default options
 options = {
-  :locale              => :fr,
-  :display_kills       => true,
-  :display_actions     => true,
-  :display_changelevel => true,
-  :display_chat        => true,
-  :display_team_chat   => true,
-  :displayer           => FlowdockPusher
+  :host                 => "0.0.0.0",
+  :port                 => 27115,
+  :locale               => :en,
+  :display_kills        => true,
+  :display_actions      => true,
+  :display_changelevel  => true,
+  :display_chat         => true,
+  :display_team_chat    => true
 }
 
-SteamHldsLogParser::Client.new("127.0.0.1", 27035, options).start
+parser = SteamHldsLogParser::Client.new(Formatter, options)
+parser.start

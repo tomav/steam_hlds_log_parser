@@ -4,48 +4,96 @@ module SteamHldsLogParser
 
   describe "SteamHldsLogParser" do
 
-    before :all do
-      @client         = Client.new("0.0.0.0", 27035)
-      @options        = @client.options
-      @custom_options = custom_options
-      @custom_client  = Client.new("127.0.0.1", 27045, @custom_options)
-    end
-
     describe "Client" do
 
-      it "raises an exception when parameters are missing" do
-        expect { Client.new }.to raise_error(ArgumentError)
+      context "when parameters are missing" do
+        it "raises an exception" do
+          expect { Client.new }.to raise_error(ArgumentError)
+        end
       end
 
-      subject { @client }
-      context "when a 'Client' is created without options"
+      subject(:default_client) { Client.new(RSpecDisplayer) }
+      context "when a 'Client' is created with default options"
       it { should be_an_instance_of Client }
-      it "has a 'host'" do
-        @client.host.should_not be_nil      
-        @client.host.should eq("0.0.0.0")
-      end
-      it "has a 'port'" do
-        @client.port.should_not be_nil      
-        @client.port.should eq(27035)
-      end
       it "has a default 'options' Hash" do
-        @client.options.should_not be_nil      
-        @client.options.should_not be(nil)
-        @client.options.class.should be(Hash)
-        @client.options.should eq(@options)
+        default_client.options.should_not be_nil      
+        default_client.options.should_not be(nil)
+        default_client.options.class.should be(Hash)
+      end
+      it "has a default 'host'" do
+        default_client.options[:host].should_not be_nil      
+        default_client.options[:host].should eq("0.0.0.0")
+      end
+      it "has a default 'port'" do
+        default_client.options[:port].should_not be_nil      
+        default_client.options[:port].should eq(27115)
+      end
+      it "has a default 'locale'" do
+        default_client.options[:locale].should_not be_nil      
+        default_client.options[:locale].class.should eq(Symbol)      
+        default_client.options[:locale].should eq(:en)
+      end
+      it "has a default 'display_kills'" do
+        default_client.options[:display_kills].should_not be_nil      
+        default_client.options[:display_kills].should be(true)
+      end
+      it "has a default 'display_actions'" do
+        default_client.options[:display_actions].should_not be_nil      
+        default_client.options[:display_actions].should be(true)
+      end
+      it "has a default 'display_changelevel'" do
+        default_client.options[:display_changelevel].should_not be_nil      
+        default_client.options[:display_changelevel].should be(true)
+      end
+      it "has a default 'display_chat'" do
+        default_client.options[:display_chat].should_not be_nil      
+        default_client.options[:display_chat].should be(true)
+      end
+      it "has a default 'display_team_chat'" do
+        default_client.options[:display_team_chat].should_not be_nil      
+        default_client.options[:display_team_chat].should be(true)
       end
 
-      subject(:custom_client) { @custom_client }
-      context "when custom options are given"
-      it "can get a custom 'options' Hash" do
-        @custom_client.options.should_not be_nil      
-        @custom_client.options.class.should be(Hash)
-        @custom_client.options.should eq(@custom_options)
-        @custom_client.options[:displayer].should eq(RSpecDisplayer)
-        @custom_client.options[:locale].should be(:fr)
-        @custom_client.options[:display_kills].should be(false)
-        @custom_client.options[:display_actions].should be(false)
-        @custom_client.options[:display_changelevel].should be(true)
+      subject(:custom_client) { Client.new(RSpecDisplayer, custom_options) }
+      context "when custom parameters are given"
+      it { should be_an_instance_of Client }
+      it "has a default 'options' Hash" do
+        custom_client.options.should_not be_nil      
+        custom_client.options.should_not be(nil)
+        custom_client.options.class.should be(Hash)
+      end
+      it "has a custom 'host'" do
+        custom_client.options[:host].should_not be_nil      
+        custom_client.options[:host].should eq("127.0.0.1")
+      end
+      it "has a custom 'port'" do
+        custom_client.options[:port].should_not be_nil      
+        custom_client.options[:port].should eq(12345)
+      end
+      it "has a custom 'locale'" do
+        custom_client.options[:locale].should_not be_nil      
+        custom_client.options[:locale].class.should eq(Symbol)      
+        custom_client.options[:locale].should eq(:fr)
+      end
+      it "has a custom 'display_kills'" do
+        custom_client.options[:display_kills].should_not be_nil      
+        custom_client.options[:display_kills].should be(false)
+      end
+      it "has a custom 'display_actions'" do
+        custom_client.options[:display_actions].should_not be_nil      
+        custom_client.options[:display_actions].should be(false)
+      end
+      it "has a custom 'display_changelevel'" do
+        custom_client.options[:display_changelevel].should_not be_nil      
+        custom_client.options[:display_changelevel].should be(false)
+      end
+      it "has a custom 'display_chat'" do
+        custom_client.options[:display_chat].should_not be_nil      
+        custom_client.options[:display_chat].should be(false)
+      end
+      it "has a custom 'display_team_chat'" do
+        custom_client.options[:display_team_chat].should_not be_nil      
+        custom_client.options[:display_team_chat].should be(false)
       end
 
       describe "#start and #stop" do
@@ -53,9 +101,9 @@ module SteamHldsLogParser
         context "when 'start' and 'stop' are triggered one after the other"
         it "starts then stops an eventmachine with appropriate messages" do
           EM.run {
-            capture_stdout { @client.start }.should eq("## 0.0.0.0:27035 => HLDS connected and sending data\n")
+            capture_stdout { default_client.start }.should eq("## 0.0.0.0:27115 => HLDS connected and sending data\n")
             EM.add_timer(0.2) {
-              capture_stdout { @client.stop }.should eq("## 0.0.0.0:27035 => HLDS Log Parser stopped.\n")
+              capture_stdout { default_client.stop }.should eq("## 0.0.0.0:27115 => HLDS Log Parser stopped.\n")
             }
           }
         end

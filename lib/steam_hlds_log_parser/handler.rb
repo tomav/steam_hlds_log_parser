@@ -2,31 +2,31 @@ module SteamHldsLogParser
 
   # Process data received by 'Client'
   #
-  # @attr_reader [String] host Client host / IP
-  # @attr_reader [Integer] port Client port to listen to
+  # @attr_reader [Class] displayer Callback
   # @attr_reader [Hash] options Client options
+  #
   class Handler < EM::Connection
 
-    attr_reader :host, :port, :options
+    attr_reader :displayer, :options
 
     # Initialize Handler from Client options
     #
-    # @param [String] host Hostname / IP Address the server is running
-    # @param [Integer] port Port is listening to
-    # @param [Hash] options Other client configuration options
+    # @param [Class] displayer Class to call when data is parsed
+    # @param [Hash] options Client configuration options
     #
-    def initialize(host, port, options)
-      @host, @port, @options = host, port, options
+    def initialize(displayer, options)
+      @displayer  = displayer
+      @options    = options
     end
 
     # Triggered when HLDS connects
     def post_init
-      puts "## #{@host}:#{@port} => #{I18n.t('client_connect')}"
+      puts "## #{@options[:host]}:#{@options[:port]} => #{I18n.t('client_connect')}"
     end
 
     # Triggered when HLDS disconnects
     def unbind
-      puts "## #{@host}:#{@port} => #{I18n.t('client_disconnect')}" 
+      puts "## #{@options[:host]}:#{@options[:port]} => #{I18n.t('client_disconnect')}" 
     end
 
     # Get data from Client and parse using Regexp
@@ -37,6 +37,8 @@ module SteamHldsLogParser
     # * match suicides
     # * match who did what (defuse, drop the bomb...)
     # * match changelevel
+    # * match chat (say)
+    # * match team chat (say_team)
     #
     # @param [String] data Data received by Client from HLDS server (a line of log)
     #
@@ -86,10 +88,10 @@ module SteamHldsLogParser
 
       # no matching pattern, no output
       unless content.nil?
-        if @options[:displayer].nil?
+        if @displayer.nil?
           return(content)
         else
-          @options[:displayer].new(content)
+          @displayer.new(content)
         end
       end
 
@@ -105,8 +107,9 @@ module SteamHldsLogParser
       case winner
       when "T"
         return "#{I18n.t('full_team_name_te')}"
-      else
+      when "CT"
         return "#{I18n.t('full_team_name_ct')}"
+      else
       end
     end
 
@@ -120,8 +123,9 @@ module SteamHldsLogParser
       case team
       when "TERRORIST"
         return "#{I18n.t('short_team_name_te')}"
-      else
+      when "CT"
         return "#{I18n.t('short_team_name_ct')}"
+      else
       end
     end
 
