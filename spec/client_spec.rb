@@ -15,9 +15,13 @@ module SteamHldsLogParser
       subject(:default_client) { Client.new(RSpecDisplayer) }
       context "when a 'Client' is created with default options"
       it { should be_an_instance_of Client }
+      it "has a 'displayer'" do
+        default_client.displayer.should_not be_nil      
+        default_client.displayer.class.should be(Class)
+        default_client.displayer.should be(RSpecDisplayer)
+      end
       it "has a default 'options' Hash" do
         default_client.options.should_not be_nil      
-        default_client.options.should_not be(nil)
         default_client.options.class.should be(Hash)
       end
       it "has a default 'host'" do

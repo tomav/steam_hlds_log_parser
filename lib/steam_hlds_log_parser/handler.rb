@@ -87,13 +87,7 @@ module SteamHldsLogParser
       end
 
       # no matching pattern, no output
-      unless content.nil?
-        if @displayer.nil?
-          return(content)
-        else
-          @displayer.new(content)
-        end
-      end
+      @displayer.new(content) unless content.nil?
 
     end
 

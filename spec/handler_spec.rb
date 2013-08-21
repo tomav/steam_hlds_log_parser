@@ -57,8 +57,10 @@ module SteamHldsLogParser
             it "returns Hash on map_ends" do
               data = '# L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players"'
               expected = {:type=>"map_ends", :params=>{:winner=>"CT", :score=>"17"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              puts @handler.receive_data(data)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -66,8 +68,9 @@ module SteamHldsLogParser
             it "returns Hash on victory" do
               data = '# L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")'
               expected = {:type=>"victory", :params=>{:score_ct=>"3", :score_t=>"0"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -75,8 +78,9 @@ module SteamHldsLogParser
             it "returns Hash on killed" do
               data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"'
               expected = {:type=>"kill", :params => {:killer_team=>"T", :killer=>"Killer | Player",  :killed_team=>"CT", :killed=>"Killed | Player", :weapon=>"ak47"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -84,8 +88,9 @@ module SteamHldsLogParser
             it "returns Hash on killed" do
               data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_0:0:12345><TERRORIST>" killed "Killed | Player<60><STEAM_0:0:12345><CT>" with "ak47"'
               expected = {:type=>"kill", :params => {:killer_team=>"T", :killer=>"Killer | Player",  :killed_team=>"CT", :killed=>"Killed | Player", :weapon=>"ak47"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -93,8 +98,9 @@ module SteamHldsLogParser
             it "returns Hash on suicide" do
               data = '# L 05/10/2000 - 12:34:56: "Player<66><STEAM_ID_LAN><TERRORIST>" committed suicide with "worldspawn" (world)'
               expected = {:type=>"suicide", :params=>{:killed=>"Player"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -102,8 +108,9 @@ module SteamHldsLogParser
             it "returns Hash on suicide" do
               data = '# L 05/10/2000 - 12:34:56: "Player<66><STEAM_0:0:12345><TERRORIST>" committed suicide with "worldspawn" (world)'
               expected = {:type=>"suicide", :params=>{:killed=>"Player"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -111,8 +118,9 @@ module SteamHldsLogParser
             it "returns Hash on event" do
               data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><CT>" triggered "Defused_The_Bomb"'
               expected = {:type=>"event", :params=> {:person_team=>"CT", :person=>"Killer | Player", :event_item=>"Defused_The_Bomb", :event_i18n=>"defused the bomb"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -120,8 +128,9 @@ module SteamHldsLogParser
             it "returns Hash on event" do
               data = '# L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_0:0:12345><CT>" triggered "Defused_The_Bomb"'
               expected = {:type=>"event", :params=> {:person_team=>"CT", :person=>"Killer | Player", :event_item=>"Defused_The_Bomb", :event_i18n=>"defused the bomb"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -129,8 +138,9 @@ module SteamHldsLogParser
             it "returns Hash on changelevel" do
               data = '# L 05/10/2000 - 12:34:56: Loading map "de_dust2"'
               expected = {:type=>"loading_map", :params=>{:map=>"de_dust2"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 
@@ -138,8 +148,9 @@ module SteamHldsLogParser
             it "returns Hash on changelevel" do
               data = '# L 05/10/2000 - 12:34:56: "Player<15><STEAM_0:0:12345><TERRORIST>" say "gg" (dead)'
               expected = {:type=>"chat", :params=>{:player=>"Player", :player_team=>"T", :chat=>"gg"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
           
@@ -147,8 +158,9 @@ module SteamHldsLogParser
             it "returns Hash on changelevel" do
               data = '# L 05/10/2000 - 12:34:56: "Player<15><STEAM_0:0:12345><TERRORIST>" say_team "Rush B"'
               expected = {:type=>"team_chat", :params=>{:player=>"Player", :player_team=>"T", :chat=>"Rush B"}}
-              @handler.receive_data(data).class.should eq(Hash)
-              @handler.receive_data(data).should eq(expected)
+              @handler.receive_data(data).class.should eq(RSpecDisplayer)
+              @handler.receive_data(data).data.should eq(expected)
+              @handler.receive_data(data).data.class.should eq(Hash)
             end
           end
 

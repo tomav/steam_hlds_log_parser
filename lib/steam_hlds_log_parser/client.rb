@@ -34,6 +34,7 @@ module SteamHldsLogParser
         :display_team_chat    => true,
       }
       @options      = default_options.merge(options)
+      @displayer    = displayer
      end
 
      # Starts the client which will receive HLDS logs (using UDP)

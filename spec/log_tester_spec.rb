@@ -15,9 +15,10 @@ module SteamHldsLogParser
         it "returns a Hash on matching patterns without any error" do
           File.open('spec/logs/L0000000.log', 'r') do |f|
             f.each_line do |line|
-              hash = @handler.receive_data(line)
-              unless hash.nil?
-                hash.class.should eq(Hash)
+              obj = @handler.receive_data(line)
+              unless obj.nil?
+                obj.class.should eq(RSpecDisplayer)
+                hash = obj.data
                 string = Displayer.new(hash).get_translation
                 string.class.should eq(String)
               end
