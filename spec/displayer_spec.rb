@@ -20,33 +20,33 @@ module SteamHldsLogParser
       context "when 'data' is given" do
 
         it "creates a 'Displayer'" do
-          @displayer.should be_an_instance_of Displayer
+          expect(@displayer).to be_an_instance_of Displayer
         end
 
         describe "#get_data" do
           it "returns 'data' given as argument" do
-            @displayer.get_data.should_not be_nil      
-            @displayer.get_data.should be(@data)      
+            expect(@displayer.get_data).not_to be_nil      
+            expect(@displayer.get_data).to be(@data)      
           end
         end
 
         describe "#display_data" do
           it "displays 'data' given as argument" do
-            eval(capture_stdout { @displayer.display_data }).should eq(@data)
+            expect(eval(capture_stdout { @displayer.display_data })).to eq(@data)
           end
         end
 
         describe "#get_translation" do
           it "returns translated 'data' given as argument" do
-            @displayer.get_translation.should_not be_nil      
-            @displayer.get_translation.class.should be(String)      
-            @displayer.get_translation.should eq("[CT] 3 - 0 [T]")      
+            expect(@displayer.get_translation).not_to be_nil      
+            expect(@displayer.get_translation.class).to be(String)      
+            expect(@displayer.get_translation).to eq("[CT] 3 - 0 [T]")      
           end
         end
 
         describe "#display_translation" do
           it "displays translated 'data' given as argument" do
-            capture_stdout { @displayer.display_translation }.should eq("[CT] 3 - 0 [T]\n")
+            expect(capture_stdout { @displayer.display_translation }).to eq("[CT] 3 - 0 [T]\n")
           end
         end
 

@@ -17,10 +17,10 @@ module SteamHldsLogParser
             f.each_line do |line|
               obj = @handler.receive_data(line)
               unless obj.nil?
-                obj.class.should eq(RSpecDisplayer)
+                expect(obj.class).to be(RSpecDisplayer)
                 hash = obj.data
                 string = Displayer.new(hash).get_translation
-                string.class.should eq(String)
+                expect(string.class).to be(String)
               end
             end
           end
