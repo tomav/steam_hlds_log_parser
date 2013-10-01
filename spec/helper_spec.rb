@@ -2,6 +2,12 @@ require "simplecov"
 require "coveralls"
 require "rspec"
 
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
+end
+
 # Simplecov / Coverall configuration
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
@@ -45,6 +51,8 @@ def custom_options
     :display_changelevel  => false,
     :display_chat         => false,
     :display_team_chat    => false,
+    :display_connect      => false,
+    :display_disconnect   => false,
     :displayer            => RSpecDisplayer
   }  
 end

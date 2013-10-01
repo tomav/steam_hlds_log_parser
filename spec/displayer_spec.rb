@@ -19,14 +19,14 @@ module SteamHldsLogParser
 
       context "when 'data' is given" do
 
-        it "creates a 'Displayer'" do
-          expect(@displayer).to be_an_instance_of Displayer
-        end
+        subject { @displayer }
+        it { should be_an_instance_of Displayer } 
 
         describe "#get_data" do
+          subject { @displayer.get_data }
           it "returns 'data' given as argument" do
-            expect(@displayer.get_data).not_to be_nil      
-            expect(@displayer.get_data).to be(@data)      
+            should_not be_nil      
+            should be(@data)      
           end
         end
 

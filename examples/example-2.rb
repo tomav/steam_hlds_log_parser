@@ -18,7 +18,9 @@ options = {
   :display_actions      => true,
   :display_changelevel  => true,
   :display_chat         => true,
-  :display_team_chat    => true
+  :display_team_chat    => true,
+  :display_connect      => true,
+  :display_disconnect   => true
 }
 
 parser = SteamHldsLogParser::Client.new(Formatter, options)

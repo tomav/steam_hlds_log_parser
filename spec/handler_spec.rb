@@ -57,7 +57,6 @@ module SteamHldsLogParser
             it "returns Hash on map_ends" do
               data = '# L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players"'
               expected = {:type=>"map_ends", :params=>{:winner=>"CT", :score=>"17"}}
-              puts @handler.receive_data(data)
               expect(@handler.receive_data(data).class).to be(RSpecDisplayer)
               expect(@handler.receive_data(data).data).to eq(expected)
               expect(@handler.receive_data(data).data.class).to be(Hash)
@@ -158,6 +157,26 @@ module SteamHldsLogParser
             it "returns Hash on changelevel" do
               data = '# L 05/10/2000 - 12:34:56: "Player<15><STEAM_0:0:12345><TERRORIST>" say_team "Rush B"'
               expected = {:type=>"team_chat", :params=>{:player=>"Player", :player_team=>"T", :chat=>"Rush B"}}
+              expect(@handler.receive_data(data).class).to be(RSpecDisplayer)
+              expect(@handler.receive_data(data).data).to eq(expected)
+              expect(@handler.receive_data(data).data.class).to be(Hash)
+            end
+          end
+
+          context "when data is 'connect'" do
+            it "returns Hash when a user connects the server" do
+              data = '# L 05/10/2000 - 12:34:56: "Player<73><STEAM_ID_LAN><>" connected, address "192.168.4.186:1339"'
+              expected = {:type=>"connect", :params=>{:player=>"Player", :ip=>"192.168.4.186", :port=>"1339"}}
+              expect(@handler.receive_data(data).class).to be(RSpecDisplayer)
+              expect(@handler.receive_data(data).data).to eq(expected)
+              expect(@handler.receive_data(data).data.class).to be(Hash)
+            end
+          end
+
+          context "when data is 'disconnect'" do
+            it "returns Hash when a user disconnects" do
+              data = '# L 05/10/2000 - 12:34:56: "Player<73><STEAM_ID_LAN><TERRORIST>" disconnected'
+              expected = {:type=>"disconnect", :params=>{:player=>"Player", :player_team=>"T"}}
               expect(@handler.receive_data(data).class).to be(RSpecDisplayer)
               expect(@handler.receive_data(data).data).to eq(expected)
               expect(@handler.receive_data(data).data.class).to be(Hash)

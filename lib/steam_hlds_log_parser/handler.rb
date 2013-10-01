@@ -39,6 +39,7 @@ module SteamHldsLogParser
     # * match changelevel
     # * match chat (say)
     # * match team chat (say_team)
+    # * user connections / disconnections
     #
     # @param [String] data Data received by Client from HLDS server (a line of log)
     #
@@ -83,6 +84,16 @@ module SteamHldsLogParser
       elsif @options[:display_team_chat] && data.gsub(/: "(.+)<\d+><.+><([A-Z]+)>" say_team "(.+)"/).count > 0
         player, player_team, message = data.match(/: "(.+)<\d+><.+><([A-Z]+)>" say_team "(.+)"/i).captures
         content = { :type => 'team_chat', :params => { :player => player, :player_team => get_short_team_name(player_team), :chat => message } }
+
+      # L 05/10/2000 - 12:34:56: "Player<73><STEAM_ID_LAN><>" connected, address "192.168.4.186:1339"
+      elsif @options[:display_connect] && data.gsub(/: "(.+)<\d+><.+>" connected, address "(.+):(.+)"/).count > 0
+        player, ip, port = data.match(/: "(.+)<\d+><.+>" connected, address "(.+):(.+)"/i).captures
+        content = { :type => 'connect', :params => { :player => player, :ip => ip, :port => port } }
+
+      # L 05/10/2000 - 12:34:56: "Player<73><STEAM_ID_LAN><TERRORIST>" disconnected
+      elsif @options[:display_disconnect] && data.gsub(/: "(.+)<\d+><.+><(.+)>" disconnected/).count > 0
+        player, player_team = data.match(/: "(.+)<\d+><.+><(.+)>" disconnected/i).captures
+        content = { :type => 'disconnect', :params => { :player => player, :player_team => get_short_team_name(player_team) } }
 
       end
 

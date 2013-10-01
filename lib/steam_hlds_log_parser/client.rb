@@ -21,6 +21,8 @@ module SteamHldsLogParser
     # @option options [Boolean] :display_changelevel (true) Enable changelevel (map) display
     # @option options [Boolean] :display_chat (true) Enable chat ('say') display
     # @option options [Boolean] :display_team_chat (true) Enable chat ('say_team') display
+    # @option options [Boolean] :display_connect (true) Enable player connection display
+    # @option options [Boolean] :display_disconnect (true) Enable player disconnection display
     #
     def initialize(displayer, options = {})
       default_options = {
@@ -32,6 +34,8 @@ module SteamHldsLogParser
         :display_changelevel  => true,
         :display_chat         => true,
         :display_team_chat    => true,
+        :display_connect      => true,
+        :display_disconnect   => true
       }
       @options      = default_options.merge(options)
       @displayer    = displayer
