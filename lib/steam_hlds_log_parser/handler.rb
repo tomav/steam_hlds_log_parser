@@ -46,14 +46,14 @@ module SteamHldsLogParser
     def receive_data(data)
 
       # L 05/10/2000 - 12:34:56: Team "CT" scored "17" with "0" players
-      if data.gsub(/Team "([A-Z]+)" scored "(\d+)" with "(\d+)"/).count > 0
+      if @options[:display_end_map] && data.gsub(/Team "([A-Z]+)" scored "(\d+)" with "(\d+)"/).count > 0
         winner, winner_score = data.match(/Team "(.+)" scored "(\d+)" with/).captures
-        content = { :type => 'map_ends', :params => { :winner => get_short_team_name(winner), :score => winner_score } } 
+        content = { :type => 'end_map', :params => { :winner => get_short_team_name(winner), :score => winner_score } } 
 
       # L 05/10/2000 - 12:34:56: Team "CT" triggered "CTs_Win" (CT "3") (T "0")
-      elsif data.gsub(/: Team "[A-Z]+" triggered/).count > 0
+      elsif @options[:display_end_map] && data.gsub(/: Team "[A-Z]+" triggered/).count > 0
         winner, type, score_ct, score_t = data.match(/Team "([A-Z]+)" triggered "([A-Za-z_]+)" \(CT "(\d+)"\) \(T "(\d+)"\)/i).captures
-        content = { :type => 'victory', :params => { :score_ct => score_ct, :score_t => score_t } }
+        content = { :type => 'end_round', :params => { :score_ct => score_ct, :score_t => score_t } }
 
       # L 05/10/2000 - 12:34:56: "Killer | Player<66><STEAM_ID_LAN><TERRORIST>" killed "Killed | Player<60><STEAM_ID_LAN><CT>" with "ak47"
       elsif @options[:display_kills] && data.gsub(/(\>" killed ")/).count > 0

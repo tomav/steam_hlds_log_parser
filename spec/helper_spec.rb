@@ -46,6 +46,8 @@ def custom_options
     :host                 => "127.0.0.1",
     :port                 => 12345,
     :locale               => :fr,
+    :display_end_map      => false,
+    :display_end_round    => false,
     :display_kills        => false,
     :display_actions      => false,
     :display_changelevel  => false,

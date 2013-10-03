@@ -16,6 +16,8 @@ module SteamHldsLogParser
     # @option options [String] :host (0.0.0.0) IP Address the client will be running, usually localhost
     # @option options [Integer] :port (27115) Port will be listening to
     # @option options [Symbol] :locale (:en) Set the language of returned content
+    # @option options [Boolean] :display_end_map (true) Enable display of score at the end of each map
+    # @option options [Boolean] :display_end_round (true) Enable display of score after each round 
     # @option options [Boolean] :display_kills (true) Enable kills / frags detail 
     # @option options [Boolean] :display_actions (true) Enable players actions / defuse / ... detail
     # @option options [Boolean] :display_changelevel (true) Enable changelevel (map) display
@@ -29,6 +31,8 @@ module SteamHldsLogParser
         :host                 => "0.0.0.0",
         :port                 => 27115,
         :locale               => :en,
+        :display_end_map      => true,
+        :display_end_round    => true,
         :display_kills        => true,
         :display_actions      => true,
         :display_changelevel  => true,

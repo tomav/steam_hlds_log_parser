@@ -37,6 +37,14 @@ module SteamHldsLogParser
           expect(default_client.options[:locale].class).to be(Symbol)
           expect(default_client.options[:locale]).to be(:en)
         end
+        it "has a default 'display_end_map'" do
+          expect(default_client.options[:display_end_map]).not_to be_nil      
+          expect(default_client.options[:display_end_map]).to be_true      
+        end
+        it "has a default 'display_end_round'" do
+          expect(default_client.options[:display_end_round]).not_to be_nil      
+          expect(default_client.options[:display_end_round]).to be_true      
+        end
         it "has a default 'display_kills'" do
           expect(default_client.options[:display_kills]).not_to be_nil      
           expect(default_client.options[:display_kills]).to be_true      
@@ -86,6 +94,14 @@ module SteamHldsLogParser
           expect(custom_client.options[:locale]).not_to be_nil      
           expect(custom_client.options[:locale].class).to be(Symbol)      
           expect(custom_client.options[:locale]).to be(:fr)  
+        end
+        it "has a default 'display_end_map'" do
+          expect(custom_client.options[:display_end_map]).not_to be_nil      
+          expect(custom_client.options[:display_end_map]).to be_false      
+        end
+        it "has a default 'display_end_round'" do
+          expect(custom_client.options[:display_end_round]).not_to be_nil      
+          expect(custom_client.options[:display_end_round]).to be_false      
         end
         it "has a custom 'display_kills'" do
           expect(custom_client.options[:display_kills]).not_to be_nil      
