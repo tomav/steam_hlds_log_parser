@@ -43,4 +43,4 @@ fr:
   chat: "[%{player_team}] %{player} dit \"%{chat}\""
   team_chat: "[%{player_team}] %{player} dit \"%{chat}\" aux autres [%{player_team}]"
   connect: "%{player} se connecte"
-  disconnect: "%{player} s'est connecté"
+  disconnect: "%{player} s'est déconnecté"
